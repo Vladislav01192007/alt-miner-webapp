@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ALT Miner</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="assets/logo.png" alt="ALT Miner Logo" class="logo" />
+      <h1>ALT Miner</h1>
+      <p>Mine ALT Coins and upgrade your crypto empire!</p>
+    </header>
+
+    <main>
+      <div class="miner-box">
+        <img src="assets/mine-icon.png" alt="Mine Icon" class="mine-icon" />
+        <button id="mineButton">⛏️ Mine ALT</button>
+        <p>You have <span id="altCount">0</span> ALT coins</p>
+      </div>
+
+      <div class="upgrades">
+        <h2>Upgrades</h2>
+        <div class="upgrade" id="upgrade1">
+          <span>+1 ALT/sec — <strong>Cost: 50 ALT</strong></span>
+          <button onclick="buyUpgrade(1)">Buy</button>
+        </div>
+        <div class="upgrade" id="upgrade2">
+          <span>+5 ALT/sec — <strong>Cost: 200 ALT</strong></span>
+          <button onclick="buyUpgrade(2)">Buy</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>Coming soon: Convert ALT to $ALTST Token!</p>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

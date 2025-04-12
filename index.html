@@ -17,19 +17,23 @@
     <main>
       <div class="miner-box">
         <img src="assets/mine-icon.png" alt="Mine Icon" class="mine-icon" />
-        <button id="mineButton">⛏️ Mine ALT</button>
-        <p>You have <span id="altCount">0</span> ALT coins</p>
+        <button id="mineBtn">⛏️ Mine ALT</button>
+        <p>You have <span id="coinCount">0</span> ALT coins</p>
       </div>
 
       <div class="upgrades">
         <h2>Upgrades</h2>
         <div class="upgrade" id="upgrade1">
-          <span>+1 ALT/sec — <strong>Cost: 50 ALT</strong></span>
-          <button onclick="buyUpgrade(1)">Buy</button>
+          <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">10</span> ALT</strong></span>
+          <button>Buy</button>
         </div>
         <div class="upgrade" id="upgrade2">
-          <span>+5 ALT/sec — <strong>Cost: 200 ALT</strong></span>
-          <button onclick="buyUpgrade(2)">Buy</button>
+          <span>+3 ALT/sec — <strong>Cost: <span id="upgrade2Cost">50</span> ALT</strong></span>
+          <button>Buy</button>
+        </div>
+        <div class="upgrade" id="upgrade3">
+          <span>+10 ALT/sec — <strong>Cost: <span id="upgrade3Cost">200</span> ALT</strong></span>
+          <button>Buy</button>
         </div>
       </div>
     </main>

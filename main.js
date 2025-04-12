@@ -1,39 +1,27 @@
-let altCoins = 0;
-let perClick = 1;
-
-const coinDisplay = document.getElementById("coinCount");
-const mineBtn = document.getElementById("mineBtn");
-
-const upgrades = [
-  { id: "upgrade1", cost: 10, bonus: 1 },
-  { id: "upgrade2", cost: 50, bonus: 3 },
-  { id: "upgrade3", cost: 200, bonus: 10 },
-];
+let balance = 0;
+let clickPower = 1;
+let upgradeCost = 10;
 
 function updateDisplay() {
-  coinDisplay.innerText = altCoins;
+  document.getElementById("balance").textContent = balance.toFixed(2);
+  document.getElementById("upgrade-cost").textContent = upgradeCost;
+  document.getElementById("power").textContent = clickPower;
 }
 
 function mine() {
-  altCoins += perClick;
+  balance += clickPower;
   updateDisplay();
 }
 
-function buyUpgrade(id) {
-  const upgrade = upgrades.find(u => u.id === id);
-  if (altCoins >= upgrade.cost) {
-    altCoins -= upgrade.cost;
-    perClick += upgrade.bonus;
-    upgrade.cost = Math.floor(upgrade.cost * 1.5); // збільшити ціну після купівлі
-    document.getElementById(id + "Cost").innerText = upgrade.cost;
+function upgrade() {
+  if (balance >= upgradeCost) {
+    balance -= upgradeCost;
+    clickPower += 1;
+    upgradeCost = Math.floor(upgradeCost * 1.5);
     updateDisplay();
   } else {
-    alert("Недостатньо ALT coins!");
+    alert("Недостатньо ALT для апгрейду!");
   }
 }
 
-mineBtn.addEventListener("click", mine);
-
-upgrades.forEach(upg => {
-  document.getElementById(upg.id).addEventListener("click", () => buyUpgrade(upg.id));
-});
+window.onload = updateDisplay;

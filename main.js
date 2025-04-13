@@ -4,33 +4,30 @@ let perClick = 1;
 const altCount = document.getElementById("altCount");
 const mineButton = document.getElementById("mineButton");
 
-// Список апгрейдів
-const upgrades = {
-  upgrade1: { bonus: 1, cost: 50 },
-  upgrade2: { bonus: 5, cost: 200 },
-};
+const upgrades = [
+  { id: "upgrade1", cost: 10, bonus: 1 },
+  { id: "upgrade2", cost: 50, bonus: 3 },
+  { id: "upgrade3", cost: 200, bonus: 10 }
+];
 
-// Оновлення відображення ALT
 function updateDisplay() {
-  altCount.innerText = altCoins;
-  for (let key in upgrades) {
-    const upgrade = upgrades[key];
-    const upgradeElement = document.querySelector(`#${key} strong`);
-    if (upgradeElement) {
-      upgradeElement.innerText = `Cost: ${upgrade.cost} ALT`;
+  altCount.textContent = altCoins;
+  upgrades.forEach(upg => {
+    const upgradeElem = document.getElementById(upg.id);
+    if (upgradeElem) {
+      const span = upgradeElem.querySelector("span");
+      span.innerHTML = `+${upg.bonus} ALT/sec — <strong>Cost: ${upg.cost} ALT</strong>`;
     }
-  }
+  });
 }
 
-// Дія кнопки "Mine ALT"
-mineButton.addEventListener("click", () => {
+function mine() {
   altCoins += perClick;
   updateDisplay();
-});
+}
 
-// Покупка апгрейду
 function buyUpgrade(id) {
-  const upgrade = upgrades[id];
+  const upgrade = upgrades.find(u => u.id === id);
   if (!upgrade) return;
 
   if (altCoins >= upgrade.cost) {
@@ -39,9 +36,18 @@ function buyUpgrade(id) {
     upgrade.cost = Math.floor(upgrade.cost * 1.5);
     updateDisplay();
   } else {
-    alert("Недостатньо ALT для покупки апгрейду!");
+    alert("Недостатньо ALT coins!");
   }
 }
 
-// Ініціалізація
+mineButton.addEventListener("click", mine);
+
+// Прив’язуємо кнопки для кожного апгрейду
+upgrades.forEach(upg => {
+  const button = document.querySelector(`#${upg.id} button`);
+  if (button) {
+    button.addEventListener("click", () => buyUpgrade(upg.id));
+  }
+});
+
 updateDisplay();

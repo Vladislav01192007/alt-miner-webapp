@@ -1,27 +1,47 @@
-let balance = 0;
-let clickPower = 1;
-let upgradeCost = 10;
+let altCoins = 0;
+let perClick = 1;
 
+const altCount = document.getElementById("altCount");
+const mineButton = document.getElementById("mineButton");
+
+// Список апгрейдів
+const upgrades = {
+  upgrade1: { bonus: 1, cost: 50 },
+  upgrade2: { bonus: 5, cost: 200 },
+};
+
+// Оновлення відображення ALT
 function updateDisplay() {
-  document.getElementById("balance").textContent = balance.toFixed(2);
-  document.getElementById("upgrade-cost").textContent = upgradeCost;
-  document.getElementById("power").textContent = clickPower;
-}
-
-function mine() {
-  balance += clickPower;
-  updateDisplay();
-}
-
-function upgrade() {
-  if (balance >= upgradeCost) {
-    balance -= upgradeCost;
-    clickPower += 1;
-    upgradeCost = Math.floor(upgradeCost * 1.5);
-    updateDisplay();
-  } else {
-    alert("Недостатньо ALT для апгрейду!");
+  altCount.innerText = altCoins;
+  for (let key in upgrades) {
+    const upgrade = upgrades[key];
+    const upgradeElement = document.querySelector(`#${key} strong`);
+    if (upgradeElement) {
+      upgradeElement.innerText = `Cost: ${upgrade.cost} ALT`;
+    }
   }
 }
 
-window.onload = updateDisplay;
+// Дія кнопки "Mine ALT"
+mineButton.addEventListener("click", () => {
+  altCoins += perClick;
+  updateDisplay();
+});
+
+// Покупка апгрейду
+function buyUpgrade(id) {
+  const upgrade = upgrades[id];
+  if (!upgrade) return;
+
+  if (altCoins >= upgrade.cost) {
+    altCoins -= upgrade.cost;
+    perClick += upgrade.bonus;
+    upgrade.cost = Math.floor(upgrade.cost * 1.5);
+    updateDisplay();
+  } else {
+    alert("Недостатньо ALT для покупки апгрейду!");
+  }
+}
+
+// Ініціалізація
+updateDisplay();

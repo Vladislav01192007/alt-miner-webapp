@@ -24,7 +24,8 @@ body {
 
 /* Логотип */
 .logo {
-  width: 100px;
+  width: 150px; /* Змінено з 100px */
+  height: auto;
   margin-bottom: 10px;
 }
 

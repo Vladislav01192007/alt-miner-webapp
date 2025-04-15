@@ -1,5 +1,6 @@
 let altCoins = 0;
 let perClick = 1;
+let altPerSecond = 0;
 
 const altCount = document.getElementById("altCount");
 const mineButton = document.getElementById("mineButton");
@@ -11,7 +12,7 @@ const upgrades = [
 ];
 
 function updateDisplay() {
-  altCount.textContent = altCoins;
+  altCount.textContent = altCoins.toFixed(1);
   upgrades.forEach(upg => {
     const upgradeElem = document.getElementById(upg.id);
     if (upgradeElem) {
@@ -32,8 +33,8 @@ function buyUpgrade(id) {
 
   if (altCoins >= upgrade.cost) {
     altCoins -= upgrade.cost;
-    perClick += upgrade.bonus;
-    upgrade.cost = Math.floor(upgrade.cost * 1.5);
+    altPerSecond += upgrade.bonus;
+    upgrade.cost = Math.floor(upgrade.cost * 1.6);
     updateDisplay();
   } else {
     alert("Недостатньо ALT coins!");
@@ -42,12 +43,18 @@ function buyUpgrade(id) {
 
 mineButton.addEventListener("click", mine);
 
-// Прив’язуємо кнопки для кожного апгрейду
 upgrades.forEach(upg => {
   const button = document.querySelector(`#${upg.id} button`);
   if (button) {
     button.addEventListener("click", () => buyUpgrade(upg.id));
   }
 });
+
+function autoMine() {
+  altCoins += altPerSecond / 10;
+  updateDisplay();
+}
+
+setInterval(autoMine, 100); // автофарм кожні 100мс
 
 updateDisplay();

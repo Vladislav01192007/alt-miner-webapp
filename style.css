@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #111, #222);
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Фантастичний градієнт */
   color: #fff;
   display: flex;
   justify-content: center;
@@ -11,75 +11,87 @@ body {
   min-height: 100vh;
 }
 
+/* Контейнер */
 .container {
   max-width: 500px;
   width: 90%;
-  background-color: #1a1a1a;
-  border: 2px solid #333;
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+  border: 2px solid #444;
   padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3),
+              inset 0 0 10px rgba(0, 255, 255, 0.1);
   text-align: center;
+  backdrop-filter: blur(3px);
 }
 
 /* Логотип */
 .logo {
-  max-widht: 150px;
-  width: 100%; /* Змінено з 100px */
+  max-width: 150px;
+  width: 100%;
   height: auto;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px cyan);
 }
 
 /* Заголовок */
 h1 {
-  font-size: 2em;
-  color: #00ffff;
+  font-size: 2.5em;
+  background: linear-gradient(to right, #00ffff, #00ffaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
 }
 
 p {
   font-size: 1em;
-  color: #aaa;
+  color: #ccc;
 }
 
-/* Блок майнінгу */
+/* Майнінг */
 .miner-box {
-  margin: 20px 0;
+  margin: 25px 0;
 }
 
 .mine-icon {
-  width: 60px;
+  width: 70px;
   margin-bottom: 10px;
+  filter: drop-shadow(0 0 10px #00ffaa);
 }
 
-#mineButton {
-  padding: 12px 25px;
-  font-size: 1.1em;
-  background-color: #00cccc;
+#mineBtn {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  background: linear-gradient(145deg, #00cccc, #00aaff);
   border: none;
-  border-radius: 10px;
+  border-radius: 15px;
   color: #000;
   font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4),
+              inset 0 -2px 4px rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-#mineButton:hover {
-  background-color: #00ffaa;
+#mineBtn:hover {
+  background: linear-gradient(145deg, #00ffaa, #00ffcc);
+  transform: scale(1.05);
 }
 
 /* Апгрейди */
 .upgrades {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .upgrade {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2a2a2a;
-  padding: 12px 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+  padding: 15px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
 }
 
 .upgrade span {
@@ -89,23 +101,27 @@ p {
 }
 
 .upgrade button {
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-size: 1em;
-  background-color: #00cccc;
+  background: linear-gradient(145deg, #00cccc, #00ffaa);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   color: #000;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.3);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .upgrade button:hover {
-  background-color: #00ffaa;
+  background: linear-gradient(145deg, #00ffcc, #00ddaa);
+  transform: scale(1.05);
 }
 
 /* Футер */
 footer {
-  margin-top: 20px;
+  margin-top: 30px;
   font-size: 0.9em;
-  color: #666;
+  color: #999;
+  text-shadow: 0 0 5px #00cccc88;
 }

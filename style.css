@@ -59,7 +59,7 @@ p {
   filter: drop-shadow(0 0 10px #00ffaa);
 }
 
-#mineBtn {
+#mineButton {
   padding: 15px 30px;
   font-size: 1.2em;
   background: linear-gradient(145deg, #00cccc, #00aaff);

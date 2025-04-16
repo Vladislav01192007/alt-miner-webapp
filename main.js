@@ -2,17 +2,19 @@ let altCoins = 0;
 let perClick = 1;
 let altPerSecond = 0;
 
-const altCount = document.getElementById("altCount");
+const coinCount = document.getElementById("coinCount");
 const mineButton = document.getElementById("mineButton");
 
+// === УПГРЕЙДИ ===
 const upgrades = [
-  { id: "upgrade1", cost: 10, bonus: 1 },
-  { id: "upgrade2", cost: 50, bonus: 3 },
-  { id: "upgrade3", cost: 200, bonus: 10 }
+  { id: "upgrade1", cost: 15, bonus: 1 },
+  { id: "upgrade2", cost: 75, bonus: 5 },
+  { id: "upgrade3", cost: 300, bonus: 15 }
 ];
 
+// === ОНОВЛЕННЯ ІНТЕРФЕЙСУ ===
 function updateDisplay() {
-  altCount.textContent = altCoins.toFixed(1);
+  coinCount.textContent = altCoins.toFixed(1);
   upgrades.forEach(upg => {
     const upgradeElem = document.getElementById(upg.id);
     if (upgradeElem) {
@@ -22,11 +24,15 @@ function updateDisplay() {
   });
 }
 
+// === МАЙНІНГ ПО КЛІКУ ===
 function mine() {
   altCoins += perClick;
   updateDisplay();
 }
 
+mineButton.addEventListener("click", mine);
+
+// === КУПІВЛЯ АПГРЕЙДУ ===
 function buyUpgrade(id) {
   const upgrade = upgrades.find(u => u.id === id);
   if (!upgrade) return;
@@ -37,11 +43,9 @@ function buyUpgrade(id) {
     upgrade.cost = Math.floor(upgrade.cost * 1.6);
     updateDisplay();
   } else {
-    alert("Недостатньо ALT coins!");
+    alert("Not enough ALT coins!");
   }
 }
-
-mineButton.addEventListener("click", mine);
 
 upgrades.forEach(upg => {
   const button = document.querySelector(`#${upg.id} button`);
@@ -50,11 +54,38 @@ upgrades.forEach(upg => {
   }
 });
 
+// === АВТОМАЙНІНГ ===
 function autoMine() {
   altCoins += altPerSecond / 10;
   updateDisplay();
 }
+setInterval(autoMine, 100);
 
-setInterval(autoMine, 100); // автофарм кожні 100мс
+// === ПЕРЕМИКАННЯ ВКЛАДОК ===
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    const tabId = btn.getAttribute("data-tab");
+    document.getElementById(tabId).classList.add("active");
+  });
+});
 
+// === СТАРТОВИЙ ЕКРАН ===
+const startBtn = document.getElementById("startBtn");
+const authScreen = document.getElementById("auth-screen");
+const gameScreen = document.getElementById("game-screen");
+
+startBtn.addEventListener("click", () => {
+  const username = document.getElementById("username").value.trim();
+  if (username.length < 2) {
+    alert("Please enter a valid username.");
+    return;
+  }
+
+  // Можна додати збереження логіну в localStorage
+  authScreen.classList.remove("active");
+  gameScreen.classList.add("active");
+});
+
+// === ІНІЦІАЛІЗАЦІЯ ===
 updateDisplay();

@@ -7,42 +7,70 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <!-- Логотип гри -->
+  <!-- Стартовий екран -->
+  <div id="auth-screen" class="screen active">
+    <div class="auth-container">
       <img src="logo.png" alt="ALT Miner Logo" class="logo" />
       <h1>ALT Miner</h1>
-      <p>Mine ALT Coins and upgrade your crypto empire!</p>
-    </header>
+      <input type="text" placeholder="Enter your username" id="username" />
+      <button id="startBtn">Start Mining</button>
+    </div>
+  </div>
 
-    <main>
-      <div class="miner-box">
-        <!-- Іконка шахти -->
-        <img src="mine-icon.png" alt="Mine Icon" class="mine-icon" />
-        <button id="mineButton">⛏️ Mine ALT</button>
-        <p>You have <span id="coinCount">0</span> ALT coins</p>
-      </div>
+  <!-- Головний інтерфейс -->
+  <div id="game-screen" class="screen">
+    <div class="container">
+      <main>
+        <div id="minerTab" class="tab active">
+          <div class="miner-box">
+            <img src="mine-icon.png" alt="Mine Icon" class="mine-icon" />
+            <button id="mineButton">⛏️ Mine ALT</button>
+            <p>You have <span id="coinCount">0</span> ALT coins</p>
+          </div>
+        </div>
 
-      <div class="upgrades">
-        <h2>Upgrades</h2>
-        <div class="upgrade" id="upgrade1">
-          <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">10</span> ALT</strong></span>
-          <button>Buy</button>
+        <div id="upgradesTab" class="tab">
+          <h2>Upgrades</h2>
+          <div class="upgrade" id="upgrade1">
+            <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">15</span> ALT</strong></span>
+            <button>Buy</button>
+          </div>
+          <div class="upgrade" id="upgrade2">
+            <span>+5 ALT/sec — <strong>Cost: <span id="upgrade2Cost">75</span> ALT</strong></span>
+            <button>Buy</button>
+          </div>
+          <div class="upgrade" id="upgrade3">
+            <span>+15 ALT/sec — <strong>Cost: <span id="upgrade3Cost">300</span> ALT</strong></span>
+            <button>Buy</button>
+          </div>
         </div>
-        <div class="upgrade" id="upgrade2">
-          <span>+3 ALT/sec — <strong>Cost: <span id="upgrade2Cost">50</span> ALT</strong></span>
-          <button>Buy</button>
-        </div>
-        <div class="upgrade" id="upgrade3">
-          <span>+10 ALT/sec — <strong>Cost: <span id="upgrade3Cost">200</span> ALT</strong></span>
-          <button>Buy</button>
-        </div>
-      </div>
-    </main>
 
-    <footer>
-      <p>Coming soon: Convert ALT to $ALTST Token!</p>
-    </footer>
+        <div id="nftTab" class="tab">
+          <h2>NFT Miners</h2>
+          <div class="nft-container">
+            <!-- Тут буде місце під 100 NFT, які ти додаси -->
+            <!-- Приклад -->
+            <div class="nft-slot">NFT #1</div>
+            <div class="nft-slot">NFT #2</div>
+            <!-- ... -->
+          </div>
+        </div>
+
+        <div id="socialsTab" class="tab">
+          <h2>Join Our Community</h2>
+          <p><a href="https://t.me/yourchannel" target="_blank">Telegram</a></p>
+          <p><a href="https://twitter.com/yourprofile" target="_blank">Twitter</a></p>
+        </div>
+      </main>
+    </div>
+
+    <!-- Нижня навігація -->
+    <nav class="bottom-nav">
+      <button class="nav-btn" data-tab="minerTab">⛏️</button>
+      <button class="nav-btn" data-tab="upgradesTab">⚙️</button>
+      <button class="nav-btn" data-tab="nftTab">🖼️</button>
+      <button class="nav-btn" data-tab="socialsTab">🌐</button>
+    </nav>
   </div>
 
   <script src="main.js"></script>

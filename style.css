@@ -192,3 +192,34 @@ footer {
   color: #999;
   text-shadow: 0 0 5px #00cccc88;
 }
+/* === ALT-лічильник виразний === */
+#altCount {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #00ffaa;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffee;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#altCount::before {
+  content: "🪙";
+  font-size: 1.2em;
+}
+
+/* === Центрування навігаційної панелі === */
+.navbar {
+  justify-content: center;
+}
+.nav-btn {
+  flex: none;
+  margin: 0 10px;
+}
+
+/* === Кольоровий фон з логотипами й кирками === */
+body {
+  background-image: url('A_seamless_digital_illustration_features_pickaxes_.png');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
+}

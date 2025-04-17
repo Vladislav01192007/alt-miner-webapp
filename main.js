@@ -7,34 +7,59 @@ let upgrades = [
   { id: "upgrade3", cost: 200, value: 10 },
 ];
 
-// ==== Запуск гри після авторизації ====
-document.getElementById("startBtn").addEventListener("click", () => {
-  const name = document.getElementById("usernameInput").value.trim();
-  if (name.length > 0) {
-    document.getElementById("auth-screen").style.display = "none";
-    document.getElementById("game-screen").style.display = "block";
-    startMiningLoop();
-  } else {
-    alert("Please enter your name to start.");
+// ==== Завантаження прогресу ====
+function loadProgress() {
+  const savedAlt = localStorage.getItem("alt");
+  const savedAltPerSec = localStorage.getItem("altPerSecond");
+  const savedUpgrades = JSON.parse(localStorage.getItem("upgrades"));
+
+  if (savedAlt !== null) alt = parseInt(savedAlt);
+  if (savedAltPerSec !== null) altPerSecond = parseInt(savedAltPerSec);
+  if (savedUpgrades !== null) {
+    upgrades = upgrades.map((upgrade, index) => ({
+      ...upgrade,
+      cost: savedUpgrades[index]?.cost ?? upgrade.cost,
+    }));
   }
+
+  updateAltDisplay();
+  upgrades.forEach(upg => {
+    document.getElementById(`${upg.id}Cost`).textContent = upg.cost;
+  });
+}
+
+// ==== Збереження прогресу ====
+function saveProgress() {
+  localStorage.setItem("alt", alt);
+  localStorage.setItem("altPerSecond", altPerSecond);
+  localStorage.setItem("upgrades", JSON.stringify(upgrades));
+}
+
+// ==== Початок гри ====
+window.addEventListener("load", () => {
+  document.getElementById("game-screen").style.display = "block";
+  loadProgress();
+  startMiningLoop();
 });
 
-// ==== Майнімо ALT ====
+// ==== Кнопка майнінгу ====
 document.getElementById("mineButton").addEventListener("click", () => {
   alt++;
   updateAltDisplay();
+  saveProgress();
 });
 
 // ==== Покупка апгрейдів ====
-upgrades.forEach((upgrade, index) => {
+upgrades.forEach(upgrade => {
   const btn = document.querySelector(`#${upgrade.id} button`);
   btn.addEventListener("click", () => {
     if (alt >= upgrade.cost) {
       alt -= upgrade.cost;
       altPerSecond += upgrade.value;
-      upgrade.cost = Math.floor(upgrade.cost * 1.7); // Збільшуємо ціну
+      upgrade.cost = Math.floor(upgrade.cost * 1.7);
       document.getElementById(`${upgrade.id}Cost`).textContent = upgrade.cost;
       updateAltDisplay();
+      saveProgress();
     } else {
       alert("Not enough ALT!");
     }
@@ -46,10 +71,11 @@ function startMiningLoop() {
   setInterval(() => {
     alt += altPerSecond;
     updateAltDisplay();
+    saveProgress();
   }, 1000);
 }
 
-// ==== Оновлення балансу ALT ====
+// ==== Оновлення відображення ====
 function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
 }

@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ALTSETING Miner</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Екран авторизації -->
-  <div id="auth-screen">
-    <img src="logo.png" class="logo" />
-    <h1>ALTSETING Miner</h1>
-    <p>Enter your name to start farming ALT Coins!</p>
-    <input type="text" id="usernameInput" placeholder="Enter your name" />
-    <button id="startBtn">Start Mining</button>
-  </div>
-
   <!-- Основна гра -->
-  <div id="game-screen" style="display: none;">
-    <!-- Вкладки -->
+  <div id="game-screen" class="screen active">
+
+    <!-- Логотип у грі -->
+    <div style="text-align: center; margin-top: 10px;">
+      <img src="logo.png" alt="ALTSETING Logo" class="logo" />
+    </div>
+
+    <!-- Вкладка Майнер -->
     <div id="miner-tab" class="tab">
       <div class="miner-box">
         <img src="mine-icon.png" alt="Mine Icon" class="mine-icon" />
@@ -28,6 +26,7 @@
       </div>
     </div>
 
+    <!-- Вкладка Апгрейди -->
     <div id="upgrades-tab" class="tab" style="display: none;">
       <h2>Upgrades</h2>
       <div class="upgrade" id="upgrade1">
@@ -44,6 +43,7 @@
       </div>
     </div>
 
+    <!-- Вкладка Соцмережі -->
     <div id="socials-tab" class="tab" style="display: none;">
       <h2>Join Us</h2>
       <p>Follow us on social media:</p>
@@ -65,3 +65,5 @@
   <script src="main.js"></script>
 </body>
 </html>
+
+

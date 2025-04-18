@@ -223,3 +223,28 @@ body {
   background-repeat: repeat;
   background-position: center;
 }
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #1a1a1a;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.3);
+  z-index: 100;
+}
+
+.nav-btn {
+  flex: 1;
+  text-align: center;
+  color: #00ffee;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px cyan;
+}

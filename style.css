@@ -224,3 +224,15 @@ footer {
   gap: 60px;
 }
 
+.nav-btn {
+  color: #00ffff;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1);
+}
+

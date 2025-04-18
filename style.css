@@ -206,8 +206,15 @@ p {
 
 /* === Футер === */
 footer {
-  margin-top: 40px;
-  font-size: 0.9em;
-  color: #999;
-  text-shadow: 0 0 5px #00cccc88;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #111;
+  display: flex;
+  justify-content: center; /* Центрування по горизонталі */
+  gap: 60px;
+  padding: 15px 0;
+  z-index: 100;
+  box-shadow: 0 -4px 12px rgba(0, 255, 255, 0.2);
+  border-top: 2px solid #00ffff;
 }

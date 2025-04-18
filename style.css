@@ -13,6 +13,10 @@ body {
   align-items: center;
   min-height: 100vh;
   overflow-x: hidden;
+  background-image: url('A_seamless_digital_illustration_features_pickaxes_.png');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
 }
 
 .container {
@@ -157,6 +161,21 @@ p {
   box-shadow: 0 0 8px cyan;
 }
 
+/* === ALT-лічильник виразний === */
+#altCount {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #00ffaa;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffee;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#altCount::before {
+  content: "🪙";
+  font-size: 1.2em;
+}
+
 /* === Навігація внизу === */
 .navbar {
   position: fixed;
@@ -175,7 +194,7 @@ p {
   flex: 1;
   text-align: center;
   color: #00ffee;
-  font-size: 16px;
+  font-size: 1.1em;
   cursor: pointer;
   padding: 10px 0;
   touch-action: manipulation;
@@ -191,60 +210,4 @@ footer {
   font-size: 0.9em;
   color: #999;
   text-shadow: 0 0 5px #00cccc88;
-}
-/* === ALT-лічильник виразний === */
-#altCount {
-  font-size: 2.5em;
-  font-weight: bold;
-  color: #00ffaa;
-  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffee;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-#altCount::before {
-  content: "🪙";
-  font-size: 1.2em;
-}
-
-/* === Центрування навігаційної панелі === */
-.navbar {
-  justify-content: center;
-}
-.nav-btn {
-  flex: none;
-  margin: 0 10px;
-}
-
-/* === Кольоровий фон з логотипами й кирками === */
-body {
-  background-image: url('A_seamless_digital_illustration_features_pickaxes_.png');
-  background-size: cover;
-  background-repeat: repeat;
-  background-position: center;
-}
-.navbar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #1a1a1a;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.3);
-  z-index: 100;
-}
-
-.nav-btn {
-  flex: 1;
-  text-align: center;
-  color: #00ffee;
-  font-size: 1.1em;
-  cursor: pointer;
-}
-
-.nav-btn:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px cyan;
 }

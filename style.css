@@ -212,13 +212,25 @@ footer {
   background-color: #111;
   display: flex;
   justify-content: center;
-  padding: 15px 0;
+  padding: 12px 0;
   z-index: 100;
   box-shadow: 0 -4px 12px rgba(0, 255, 255, 0.2);
   border-top: 2px solid #00ffff;
 }
 
-footer .nav-button-container {
+.nav-button-container {
   display: flex;
   gap: 60px;
+}
+
+.nav-btn {
+  color: #00ffff;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1);
 }

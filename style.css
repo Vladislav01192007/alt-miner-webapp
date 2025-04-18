@@ -180,28 +180,29 @@ p {
 .navbar {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  max-width: 500px;
-  background: #1a1a1a;
+  background-color: #111;
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
-  box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.3);
   z-index: 100;
+  box-shadow: 0 -4px 12px rgba(0, 255, 255, 0.2);
+  border-top: 2px solid #00ffff;
 }
+
 .nav-btn {
-  flex: 1;
+  color: #00ffff;
+  font-size: 13px;
   text-align: center;
-  color: #00ffee;
-  font-size: 1.1em;
   cursor: pointer;
-  padding: 10px 0;
-  touch-action: manipulation;
+  line-height: 1.2;
+  transition: transform 0.2s;
 }
+
 .nav-btn:hover {
-  color: #ffffff;
-  text-shadow: 0 0 8px cyan;
+  transform: scale(1.1);
 }
 
 /* === Футер === */

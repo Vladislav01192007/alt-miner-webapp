@@ -86,7 +86,14 @@ function showTab(tabId) {
     tab.style.display = "none";
   });
   document.getElementById(tabId).style.display = "block";
+  if (tabId === 'quiz-tab') {
+    currentQuestion = 0;
+    quizScore = 0;
+    loadQuiz();
+  }
 }
+
+// ==== ALT-геній (Міні-гра) ====
 const quizData = [
   {
     question: "Що таке ALTSETING Token?",
@@ -98,7 +105,7 @@ const quizData = [
     options: ["50", "100", "500"],
     correct: 1
   },
-  // додай більше
+  // Додай ще запитання за бажанням
 ];
 
 let currentQuestion = 0;
@@ -130,10 +137,10 @@ function checkAnswer(index) {
     loadQuiz();
   } else {
     const reward = quizScore * 5;
-    altCount += reward;
-    saveAltCount();
+    alt += reward;
+    updateAltDisplay();
+    saveProgress();
     document.getElementById('quiz-question').textContent = `Тест завершено! Результат: ${quizScore}/${quizData.length}`;
     document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
   }
 }
-

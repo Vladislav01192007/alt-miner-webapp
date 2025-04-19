@@ -230,3 +230,20 @@
   .nav-btn:hover {
     transform: scale(1.1);
   }
+#quiz-options button {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 18px;
+  font-size: 16px;
+  background: linear-gradient(145deg, #00cccc, #00ffaa);
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+#quiz-options button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(145deg, #00ffaa, #00ffcc);
+}

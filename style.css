@@ -202,12 +202,12 @@
   
   /* === Футер === */
   footer {
-    position: center;
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: #111;
-    display: center;
-    justify-content: center;
+    display: flex;
+    justify-content: space-around;
     padding: 12px 0;
     z-index: 100;
     box-shadow: 0 -4px 12px rgba(0, 255, 255, 0.2);

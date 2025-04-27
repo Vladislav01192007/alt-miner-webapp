@@ -70,43 +70,50 @@
 
     /* Стилі для кнопки майнінгу */
     .mine-logo-button {
-      width: 150px;
-      height: 150px;
+      width: 180px;
+      height: 180px;
       border: none;
       border-radius: 50%;
-      background: linear-gradient(145deg, #00cccc, #00aaff);
-      padding: 10px;
+      background: transparent;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: 0.3s ease;
-      box-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff;
       animation: pulseGlow 2s infinite;
-      margin-bottom: 15px;
+      transition: 0.3s ease;
+    }
+
+    .mine-logo-bg {
+      background: #000;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .mine-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
-      50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff, 0 0 50px #00ffff; }
-      100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+      0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+      50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
+      100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
     }
 
     .mine-logo-button:hover {
       transform: scale(1.05);
-      background: linear-gradient(145deg, #00ffaa, #00ffcc);
     }
 
     .mine-logo-button:active {
       transform: scale(0.95);
-      background: linear-gradient(145deg, #00ffcc, #00ffaa);
-    }
-
-    .mine-logo-img {
-      width: 80%;
-      height: 80%;
-      object-fit: cover;
-      border-radius: 50%;
     }
   </style>
 </head>
@@ -124,18 +131,14 @@
 <!-- Основна гра -->
 <div id="game-screen" class="screen active" style="display: none;">
 
-  <!-- Логотип у грі -->
-  <div style="text-align: center; margin-top: 10px;">
-    <img src="logo.png" alt="ALTSETING Logo" class="logo" />
-  </div>
-
   <!-- Вкладка Майнер -->
   <div id="miner-tab" class="tab">
-    <div class="miner-box">
+    <div class="miner-box" style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
       <button id="mineButton" class="mine-logo-button">
-        <img src="logo.png" alt="Mine ALT" class="mine-logo-img" />
+        <div class="mine-logo-bg">
+          <img src="logo.png" alt="Mine ALT" class="mine-logo-img" />
+        </div>
       </button>
-      <p>You have <span id="altCount">0</span> ALT coins</p>
     </div>
   </div>
 

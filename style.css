@@ -88,27 +88,48 @@ p {
 .miner-box {
   margin: 25px 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.mine-icon {
-  width: 70px;
-  margin-bottom: 10px;
-  filter: drop-shadow(0 0 10px #00ffaa);
-}
+
 #mineButton {
-  padding: 15px 30px;
-  font-size: 16px;
-  background: linear-gradient(145deg, #00cccc, #00aaff);
+  width: 160px;
+  height: 160px;
   border: none;
-  border-radius: 15px;
-  color: #000;
-  font-weight: bold;
+  border-radius: 50%;
+  background: transparent; /* Прозорий фон */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  touch-action: manipulation;
+  animation: pulseGlow 2s infinite;
   transition: 0.3s ease;
 }
+
 #mineButton:hover {
   transform: scale(1.05);
-  background: linear-gradient(145deg, #00ffaa, #00ffcc);
+}
+
+#mineButton:active {
+  transform: scale(0.95);
+}
+
+/* Стилі для логотипа всередині кнопки */
+#mineButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: transparent; /* Щоб логотип теж був без фону */
+}
+
+/* Анімація світіння */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+  50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
+  100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
 }
 
 /* === Апгрейди === */

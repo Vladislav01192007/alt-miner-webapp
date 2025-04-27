@@ -43,10 +43,13 @@ window.addEventListener("load", () => {
 });
 
 // ==== Кнопка майнінгу ====
-document.getElementById("mineButton").addEventListener("click", () => {
+const mineButton = document.getElementById("mineButton");
+
+mineButton.addEventListener("click", () => {
   alt++;
   updateAltDisplay();
   saveProgress();
+  spawnCoin(); // Додаємо ефект монетки при кліку
 });
 
 // ==== Покупка апгрейдів ====
@@ -105,7 +108,6 @@ const quizData = [
     options: ["50", "100", "500"],
     correct: 1
   },
-  // Додай ще запитання за бажанням
 ];
 
 let currentQuestion = 0;
@@ -143,4 +145,16 @@ function checkAnswer(index) {
     document.getElementById('quiz-question').textContent = `Тест завершено! Результат: ${quizScore}/${quizData.length}`;
     document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
   }
+}
+
+// ==== Функція для спавну монетки при кліку ====
+function spawnCoin() {
+  const coin = document.createElement('div');
+  coin.classList.add('coin');
+  coin.textContent = '🪙';
+  document.body.appendChild(coin);
+
+  setTimeout(() => {
+    coin.remove();
+  }, 1000);
 }

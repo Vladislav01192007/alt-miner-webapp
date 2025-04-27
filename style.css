@@ -250,8 +250,8 @@ footer {
 .nav-btn:active {
   transform: scale(0.95);
   background: rgba(0, 255, 255, 0.2);
-}
-  }
+} 
+
 #quiz-options button {
   display: block;
   margin: 10px auto;

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALTSETING Miner Loading</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: appear 1.5s ease-out forwards, glow 1.5s infinite alternate;
+            margin-bottom: 30px;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #ffa500, 0 0 20px #ffa500, 0 0 30px #ff6f00;
+            }
+            to {
+                box-shadow: 0 0 20px #ff6f00, 0 0 30px #ff4500, 0 0 40px #ff0000;
+            }
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .loading {
+            font-size: 20px;
+            position: relative;
+            opacity: 0;
+            animation: fadein 2s ease-out forwards 1s;
+            margin-bottom: 20px;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1s steps(3, end) infinite;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes dots {
+            0% { content: ''; }
+            33% { content: '.'; }
+            66% { content: '..'; }
+            100% { content: '...'; }
+        }
+
+        .progress-container {
+            width: 80%;
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffa500, #ff4500);
+            animation: fillProgress 3s linear forwards;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="logo.png" alt="ALTSETING Logo" class="logo">
+    <div class="loading">Loading</div>
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "index.html"; // заміни на твій головний майнінг екран
+        }, 3000); // 3 секунди загрузки
+    </script>
+
+</body>
+</html>

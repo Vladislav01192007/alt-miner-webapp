@@ -201,34 +201,56 @@
   
   
   /* === Футер === */
-  footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #111;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    z-index: 100;
-    box-shadow: 0 -4px 12px rgba(0, 255, 255, 0.2);
-    border-top: 2px solid #00ffff;
-  }
-  
-  .nav-button-container {
-    display: flex;
-    gap: 60px;
-  }
-  
-  .nav-btn {
-    color: #00ffff;
-    font-size: 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
-  
-  .nav-btn:hover {
-    transform: scale(1.1);
+/* === Футер === */
+footer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  background: #111;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+  border: 2px solid #00ffff;
+}
+
+/* Контейнер кнопок навігації */
+.nav-button-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Кнопки навігації */
+.nav-btn {
+  color: #00ffff;
+  font-size: 14px;
+  text-align: center;
+  flex: 1;
+  max-width: 100px;
+  padding: 8px 0;
+  border-radius: 15px;
+  transition: 0.2s ease;
+}
+
+/* Анімація при наведенні */
+.nav-btn:hover {
+  transform: scale(1.1);
+  background: rgba(0, 255, 255, 0.1);
+}
+
+/* Анімація при натисканні */
+.nav-btn:active {
+  transform: scale(0.95);
+  background: rgba(0, 255, 255, 0.2);
+}
   }
 #quiz-options button {
   display: block;

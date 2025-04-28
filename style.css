@@ -286,17 +286,19 @@ footer {
 }
 
 /* === Анімація вилітання монет === */
+/* Монетки всередині контейнера */
 .coin {
   position: absolute;
-  bottom: 180px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
   animation: flyUp 1s ease-out forwards;
   pointer-events: none;
-  z-index: 999;
+  z-index: 10;
 }
 
+/* Анімація вилітання монет */
 @keyframes flyUp {
   0% {
     transform: translateX(-50%) translateY(0);

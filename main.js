@@ -44,13 +44,25 @@ window.addEventListener("load", () => {
 
 // ==== Кнопка майнінгу ====
 const mineButton = document.getElementById("mineButton");
+const coinsContainer = document.getElementById("coins-container");
 
 mineButton.addEventListener("click", () => {
   alt++;
   updateAltDisplay();
   saveProgress();
-  spawnCoin(); // Додаємо ефект монетки при кліку
+  spawnCoin();
 });
+
+function spawnCoin() {
+  const coin = document.createElement('div');
+  coin.classList.add('coin');
+  coin.textContent = '🪙';
+  coinsContainer.appendChild(coin);
+
+  setTimeout(() => {
+    coin.remove();
+  }, 1000);
+}
 
 // ==== Покупка апгрейдів ====
 upgrades.forEach(upgrade => {

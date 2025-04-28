@@ -99,6 +99,7 @@ p {
   border: none;
   border-radius: 50%;
   background: transparent; /* Прозорий фон */
+  overflow: hidden; /* Важливо для Android і Telegram WebView! */
   padding: 0;
   display: flex;
   align-items: center;
@@ -106,6 +107,9 @@ p {
   cursor: pointer;
   animation: pulseGlow 2s infinite;
   transition: 0.3s ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #mineButton:hover {
@@ -122,7 +126,8 @@ p {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  background: transparent; /* Щоб логотип теж був без фону */
+  background: transparent; /* Обов'язково прозорий фон */
+  pointer-events: none; /* Щоб натискати через картинку */
 }
 
 /* Анімація світіння */

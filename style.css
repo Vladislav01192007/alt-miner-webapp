@@ -309,3 +309,9 @@ footer {
     opacity: 0;
   }
 }
+/* Відключаємо скрол на кнопці фарму */
+#mineButton {
+  touch-action: manipulation; /* або none, якщо треба повністю */
+  -webkit-user-select: none; /* Заборона виділення тексту на мобільних */
+  user-select: none;
+}

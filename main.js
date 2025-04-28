@@ -170,3 +170,8 @@ function spawnCoin() {
     coin.remove();
   }, 1000);
 }
+// Блокуємо скрол або рух на кнопці при натисканні
+mineButton.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+}, { passive: false });
+

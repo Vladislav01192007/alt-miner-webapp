@@ -315,3 +315,6 @@ footer {
   -webkit-user-select: none; /* Заборона виділення тексту на мобільних */
   user-select: none;
 }
+body {
+  overscroll-behavior: none;
+}

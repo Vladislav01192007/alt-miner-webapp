@@ -132,11 +132,12 @@
 <div id="game-screen" class="screen active" style="display: none;">
 
   <!-- Вкладка Майнер -->
-<div id="miner-tab" class="tab">
-  <div class="miner-box" style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; position: relative;">
-    <button id="mineButton" class="mine-logo-button">
-      <img src="logo.png" alt="Mine ALT" class="mine-logo-img" />
-    </button>
+<div class="miner-box" style="position: relative; display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+  <button id="mineButton" class="mine-logo-button">
+    <img src="logo.png" alt="Mine ALT" class="mine-logo-img" />
+  </button>
+  <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+</div>
 
     <!-- Контейнер для монеток -->
     <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>

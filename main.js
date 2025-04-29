@@ -160,16 +160,19 @@ function checkAnswer(index) {
 }
 
 // ==== Функція для спавну монетки при кліку ====
+const coinsContainer = document.getElementById("coins-container");
+
 function spawnCoin() {
   const coin = document.createElement('div');
   coin.classList.add('coin');
   coin.textContent = '🪙';
-  document.body.appendChild(coin);
+  coinsContainer.appendChild(coin);
 
   setTimeout(() => {
     coin.remove();
   }, 1000);
 }
+
 // Блокуємо скрол або рух на кнопці при натисканні
 mineButton.addEventListener('touchmove', (e) => {
   e.preventDefault();

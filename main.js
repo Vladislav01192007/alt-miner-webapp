@@ -51,6 +51,10 @@ mineButton.addEventListener("click", () => {
   updateAltDisplay();
   saveProgress();
   spawnCoin();
+
+  // Додаємо клас натискання
+  mineButton.classList.add("clicked");
+  setTimeout(() => mineButton.classList.remove("clicked"), 150);
 });
 
 // Блокуємо скрол або рух на кнопці при натисканні

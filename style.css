@@ -120,7 +120,8 @@ p {
   transform: scale(1.05);
 }
 
-#mineButton:active {
+/* Забираємо :active і замінюємо на клас */
+#mineButton.clicked {
   transform: scale(0.95);
 }
 
@@ -174,7 +175,7 @@ p {
   background: linear-gradient(145deg, #00ffcc, #00ddaa);
 }
 
-/* === NFT майнери (прев’ю під 100 штук) === */
+/* === NFT майнери === */
 .nft-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -189,7 +190,7 @@ p {
   box-shadow: 0 0 8px cyan;
 }
 
-/* === ALT-лічильник виразний === */
+/* === ALT-лічильник === */
 #altCount {
   font-size: 2.5em;
   font-weight: bold;

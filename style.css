@@ -98,8 +98,8 @@ p {
   height: 160px;
   border: none;
   border-radius: 50%;
-  background: transparent;
-  overflow: hidden;
+  background: transparent; /* Прозорий фон */
+  overflow: hidden; /* Важливо для Android і Telegram WebView! */
   padding: 0;
   display: flex;
   align-items: center;
@@ -110,30 +110,27 @@ p {
   touch-action: manipulation;
   -webkit-user-select: none;
   user-select: none;
-  position: relative;
-  z-index: 10;
-  backface-visibility: hidden;
-  will-change: transform;
 }
 
 #mineButton:hover {
   transform: scale(1.05);
 }
 
-/* Забираємо :active і замінюємо на клас */
-#mineButton.clicked {
+#mineButton:active {
   transform: scale(0.95);
 }
 
+/* Стилі для логотипа всередині кнопки */
 #mineButton img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  background: transparent;
-  pointer-events: none;
+  background: transparent; /* Обов'язково прозорий фон */
+  pointer-events: none; /* Щоб натискати через картинку */
 }
 
+/* Анімація світіння */
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
   50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
@@ -175,7 +172,7 @@ p {
   background: linear-gradient(145deg, #00ffcc, #00ddaa);
 }
 
-/* === NFT майнери === */
+/* === NFT майнери (прев’ю під 100 штук) === */
 .nft-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
@@ -190,7 +187,7 @@ p {
   box-shadow: 0 0 8px cyan;
 }
 
-/* === ALT-лічильник === */
+/* === ALT-лічильник виразний === */
 #altCount {
   font-size: 2.5em;
   font-weight: bold;
@@ -205,27 +202,27 @@ p {
   font-size: 1.2em;
 }
 
-/* === Анімація монетки === */
-.coin {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 24px;
-  animation: flyUp 1s ease-out forwards;
-  pointer-events: none;
-  z-index: 5;
+/* === Навігація внизу === */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.4);
 }
 
-@keyframes flyUp {
-  0% {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) translateY(-150px);
-    opacity: 0;
-  }
+.nav-btn {
+  color: #00ffff;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+  max-width: 120px;
 }
 
 /* === Футер === */
@@ -291,4 +288,45 @@ footer {
 #quiz-options button:hover {
   transform: scale(1.05);
   background: linear-gradient(145deg, #00ffaa, #00ffcc);
+}
+
+/* === Анімація вилітання монет === */
+#mineButton {
+  width: 160px;
+  height: 160px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  overflow: hidden; /* Обрізає все зайве */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: pulseGlow 2s infinite;
+  transition: 0.3s ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+  z-index: 10;
+}
+
+#mineButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.coin {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  animation: flyUp 1s ease-out forwards;
+  pointer-events: none;
+  z-index: 5; /* Нижчий за кнопку! */
 }

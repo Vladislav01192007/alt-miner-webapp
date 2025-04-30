@@ -28,6 +28,13 @@ function loadProgress() {
   });
 }
 
+function mineALT() {
+  alt++;
+  updateAltDisplay();
+  saveProgress();
+  spawnCoin();
+}
+
 // ==== Збереження прогресу ====
 function saveProgress() {
   localStorage.setItem("alt", alt);

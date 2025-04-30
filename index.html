@@ -87,7 +87,6 @@
       border-radius: 50%;
       background: transparent;
       pointer-events: none;
-      display: block;
     }
     @keyframes pulseGlow {
       0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
@@ -95,7 +94,7 @@
       100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
     }
     .mine-logo-button:hover { transform: scale(1.05); }
-    .mine-logo-button:active { transform: scale(0.98); background: transparent; }
+    .mine-logo-button:active { transform: scale(0.95); }
   </style>
 </head>
 <body>
@@ -109,10 +108,11 @@
 
   <div id="game-screen" class="screen active" style="display: none;">
     <div id="miner-tab" class="tab">
-      <div class="miner-box" style="display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+      <div class="miner-box" style="position: relative; display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
         <button id="mineButton" class="mine-logo-button">
           <img src="logo-transparent-circle.png" alt="Mine ALT" class="mine-logo-img" />
         </button>
+        <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
       </div>
     </div>
 

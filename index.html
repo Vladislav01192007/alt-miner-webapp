@@ -6,9 +6,73 @@
   <title>ALTSETING Miner</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* Стилі для загрузки */
+    #loader-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #loader-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      animation: appear 1.5s ease-out forwards, glow 1.5s infinite alternate;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #ffa500, 0 0 20px #ffa500, 0 0 30px #ff6f00; }
+      to { box-shadow: 0 0 20px #ff6f00, 0 0 30px #ff4500, 0 0 40px #ff0000; }
+    }
+
+    @keyframes appear {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .loading-text {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .progress-container {
+      width: 80%;
+      height: 10px;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ffa500, #ff4500);
+      animation: fillProgress 3s linear forwards;
+    }
+
+    @keyframes fillProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    /* Стилі для кнопки майнінгу */
     .mine-logo-button {
       width: 180px;
       height: 180px;
+      border: none;
       border-radius: 50%;
       background: transparent;
       padding: 0;
@@ -18,11 +82,17 @@
       cursor: pointer;
       animation: pulseGlow 2s infinite;
       transition: 0.3s ease;
+    }
+
+    .mine-logo-bg {
+      background: #000;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      position: relative;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
     }
 
     .mine-logo-img {
@@ -30,7 +100,6 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
-      pointer-events: none;
     }
 
     @keyframes pulseGlow {
@@ -38,81 +107,100 @@
       50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
       100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
     }
+
+    .mine-logo-button:hover {
+      transform: scale(1.05);
+    }
+
+    .mine-logo-button:active {
+      transform: scale(0.95);
+    }
   </style>
 </head>
 <body>
-  <div id="loader-screen">
-    <img id="loader-logo" src="logo-transparent-circle.png" alt="ALTSETING Logo">
-    <div class="loading-text">Loading...</div>
-    <div class="progress-container">
-      <div class="progress-bar"></div>
+
+<!-- Екран загрузки -->
+<div id="loader-screen">
+  <img id="loader-logo" src="logo.png" alt="ALTSETING Logo">
+  <div class="loading-text">Loading...</div>
+  <div class="progress-container">
+    <div class="progress-bar"></div>
+  </div>
+</div>
+
+<!-- Основна гра -->
+<div id="game-screen" class="screen active" style="display: none;">
+
+  <!-- Вкладка Майнер -->
+<div class="miner-box" style="position: relative; display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
+  <button id="mineButton" class="mine-logo-button">
+    <img src="logo.png" alt="Mine ALT" class="mine-logo-img" />
+  </button>
+  <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+</div>
+
+    <!-- Контейнер для монеток -->
+    <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
+  </div>
+</div>
+
+  <!-- Вкладка Апгрейди -->
+  <div id="upgrades-tab" class="tab" style="display: none;">
+    <h2>Upgrades</h2>
+    <div class="upgrade" id="upgrade1">
+      <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">10</span> ALT</strong></span>
+      <button>Buy</button>
+    </div>
+    <div class="upgrade" id="upgrade2">
+      <span>+3 ALT/sec — <strong>Cost: <span id="upgrade2Cost">50</span> ALT</strong></span>
+      <button>Buy</button>
+    </div>
+    <div class="upgrade" id="upgrade3">
+      <span>+10 ALT/sec — <strong>Cost: <span id="upgrade3Cost">200</span> ALT</strong></span>
+      <button>Buy</button>
     </div>
   </div>
 
-  <div id="game-screen" class="screen active" style="display: none;">
-    <div id="miner-tab" class="tab">
-      <div class="miner-box" style="position: relative; display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-        <div id="mineButton" class="mine-logo-button">
-          <img src="logo-transparent-circle.png" alt="Mine ALT" class="mine-logo-img" />
-        </div>
-        <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-      </div>
-    </div>
-
-    <!-- Upgrades -->
-    <div id="upgrades-tab" class="tab" style="display: none;">
-      <h2>Upgrades</h2>
-      <div class="upgrade" id="upgrade1">
-        <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">10</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-      <div class="upgrade" id="upgrade2">
-        <span>+3 ALT/sec — <strong>Cost: <span id="upgrade2Cost">50</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-      <div class="upgrade" id="upgrade3">
-        <span>+10 ALT/sec — <strong>Cost: <span id="upgrade3Cost">200</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-    </div>
-
-    <!-- Socials -->
-    <div id="socials-tab" class="tab" style="display: none;">
-      <h2>Join Us</h2>
-      <p>Follow us on social media:</p>
-      <ul>
-        <li><a href="https://x.com/altsetingtoken?s=21" target="_blank">X Twitter</a></li>
-        <li><a href="https://t.me/ALTsetingtoken" target="_blank">Telegram</a></li>
-        <li><a href="https://reddit.com/r/altseting" target="_blank">Reddit</a></li>
-      </ul>
-    </div>
-
-    <!-- Quiz -->
-    <div id="quiz-tab" class="tab" style="display: none;">
-      <h2>🧠 ALT-genius</h2>
-      <div id="quiz-question">Loading...</div>
-      <div id="quiz-options"></div>
-    </div>
-
-    <!-- Footer Navigation -->
-    <footer>
-      <div class="nav-button-container">
-        <div class="nav-btn" onclick="showTab('miner-tab')">⛏️<br>Miner</div>
-        <div class="nav-btn" onclick="showTab('upgrades-tab')">⚙️<br>Upgrades</div>
-        <div class="nav-btn" onclick="showTab('socials-tab')">🌐<br>Socials</div>
-        <div class="nav-btn" onclick="showTab('quiz-tab')">🧠 ALT-генiй</div>
-      </div>
-    </footer>
+  <!-- Вкладка Соцмережі -->
+  <div id="socials-tab" class="tab" style="display: none;">
+    <h2>Join Us</h2>
+    <p>Follow us on social media:</p>
+    <ul>
+      <li><a href="https://x.com/altsetingtoken?s=21" target="_blank">X Twitter</a></li>
+      <li><a href="https://t.me/ALTsetingtoken" target="_blank">Telegram</a></li>
+      <li><a href="https://reddit.com/r/altseting" target="_blank">Reddit</a></li>
+    </ul>
   </div>
 
-  <script src="main.js"></script>
-  <script>
-    window.onload = function() {
-      setTimeout(() => {
-        document.getElementById('loader-screen').style.display = 'none';
-        document.getElementById('game-screen').style.display = 'block';
-      }, 3000);
-    };
-  </script>
+  <!-- Вкладка ALT-геній -->
+  <div id="quiz-tab" class="tab" style="display: none;">
+    <h2>🧠 ALT-genius</h2>
+    <div id="quiz-question">Loading...</div>
+    <div id="quiz-options"></div>
+  </div>
+
+  <!-- Панель навігації -->
+  <footer>
+    <div class="nav-button-container">
+      <div class="nav-btn" onclick="showTab('miner-tab')">⛏️<br>Miner</div>
+      <div class="nav-btn" onclick="showTab('upgrades-tab')">⚙️<br>Upgrades</div>
+      <div class="nav-btn" onclick="showTab('socials-tab')">🌐<br>Socials</div>
+      <div class="nav-btn" onclick="showTab('quiz-tab')">🧠 ALT-геній</div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="main.js"></script>
+<script>
+  // Сховати лоадер і показати гру після загрузки
+  window.onload = function() {
+    setTimeout(() => {
+      document.getElementById('loader-screen').style.display = 'none';
+      document.getElementById('game-screen').style.display = 'block';
+    }, 3000);
+  };
+</script>
 </body>
 </html>

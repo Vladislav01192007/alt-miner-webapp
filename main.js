@@ -51,18 +51,8 @@ mineButton.addEventListener("click", () => {
   updateAltDisplay();
   saveProgress();
   spawnCoin();
-
-  // Додаємо клас натискання
-  mineButton.classList.add("clicked");
-  setTimeout(() => mineButton.classList.remove("clicked"), 150);
 });
 
-// Блокуємо скрол або рух на кнопці при натисканні
-mineButton.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-}, { passive: false });
-
-// ==== Функція для спавну монетки при кліку ====
 function spawnCoin() {
   const coin = document.createElement('div');
   coin.classList.add('coin');
@@ -168,3 +158,22 @@ function checkAnswer(index) {
     document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
   }
 }
+
+// ==== Функція для спавну монетки при кліку ====
+const coinsContainer = document.getElementById("coins-container");
+
+function spawnCoin() {
+  const coin = document.createElement('div');
+  coin.classList.add('coin');
+  coin.textContent = '🪙';
+  coinsContainer.appendChild(coin);
+
+  setTimeout(() => {
+    coin.remove();
+  }, 1000);
+}
+
+// Блокуємо скрол або рух на кнопці при натисканні
+mineButton.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+}, { passive: false });

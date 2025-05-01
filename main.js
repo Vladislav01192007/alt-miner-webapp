@@ -91,6 +91,31 @@ canvas.addEventListener("click", () => {
   }, 100);
 });
 
+const mineCanvas = document.getElementById("mineCanvas");
+
+mineCanvas.addEventListener("click", () => {
+  alt++;
+  updateAltDisplay();
+  saveProgress();
+  spawnCoin();
+
+  // Натискання + вібрація
+  mineCanvas.classList.add("clicked");
+  setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
+
+  // Вібрація на мобілках (якщо підтримується)
+  if (navigator.vibrate) navigator.vibrate(50);
+});
+
+const canvas = document.getElementById("mineCanvas");
+const ctx = canvas.getContext("2d");
+const image = new Image();
+image.src = "logo-transparent-circle.png"; // твоя кругла картинка
+
+image.onload = () => {
+  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+};
+
 function spawnCoin() {
   const coin = document.createElement('div');
   coin.classList.add('coin');

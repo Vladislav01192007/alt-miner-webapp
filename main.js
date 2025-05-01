@@ -43,80 +43,10 @@ window.addEventListener("load", () => {
 });
 
 // ==== Кнопка майнінгу ====
-const canvas = document.getElementById("mineCanvas");
-const ctx = canvas.getContext("2d");
-
-// Намалювати кнопку
-function drawButton() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Коло
-  ctx.beginPath();
-  ctx.arc(90, 90, 85, 0, 2 * Math.PI);
-  ctx.fillStyle = "#00ffff";
-  ctx.fill();
-
-  // Градієнтне світіння
-  const gradient = ctx.createRadialGradient(90, 90, 10, 90, 90, 85);
-  gradient.addColorStop(0, "#ffffff55");
-  gradient.addColorStop(1, "#00ffff");
-
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 8;
-  ctx.stroke();
-
-  // Текст або іконка
-  ctx.fillStyle = "#000";
-  ctx.font = "bold 24px Arial";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("MINE", 90, 90);
-}
-
-drawButton();
-
-// Натискання на Canvas-кнопку
-canvas.addEventListener("click", () => {
-  alt++;
-  updateAltDisplay();
-  saveProgress();
-  spawnCoin();
-
-  // анімація натискання (скорочене світло)
-  ctx.globalAlpha = 0.8;
-  drawButton();
-  setTimeout(() => {
-    ctx.globalAlpha = 1;
-    drawButton();
-  }, 100);
-});
-
-const mineCanvas = document.getElementById("mineCanvas");
-
-mineCanvas.addEventListener("click", () => {
-  alt++;
-  updateAltDisplay();
-  saveProgress();
-  spawnCoin();
-
-  // Натискання + вібрація
-  mineCanvas.classList.add("clicked");
-  setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
-
-  // Вібрація на мобілках (якщо підтримується)
-  if (navigator.vibrate) navigator.vibrate(50);
-});
-
-const canvas = document.getElementById("mineCanvas");
-const ctx = canvas.getContext("2d");
-const image = new Image();
-image.src = "logo-transparent-circle.png"; // твоя кругла картинка
-
-image.onload = () => {
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-};
 const mineCanvas = document.getElementById("mineCanvas");
 const ctx = mineCanvas.getContext("2d");
+const coinsContainer = document.getElementById("coins-container");
+
 const img = new Image();
 img.src = "logo-transparent-circle.png"; // твоя картинка
 
@@ -124,6 +54,7 @@ img.onload = () => {
   drawMineButton();
 };
 
+// Малюємо картинку всередині круглої кнопки
 function drawMineButton() {
   ctx.clearRect(0, 0, mineCanvas.width, mineCanvas.height);
   ctx.save();
@@ -133,20 +64,27 @@ function drawMineButton() {
   ctx.drawImage(img, 0, 0, 180, 180);
   ctx.restore();
 }
+
+// Обробка кліку по кнопці
 mineCanvas.addEventListener("click", () => {
   alt++;
   updateAltDisplay();
   saveProgress();
   spawnCoin();
+
+  // Ефект натискання
+  mineCanvas.classList.add("clicked");
+  setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
+
+  // Вібрація, якщо підтримується
+  if (navigator.vibrate) navigator.vibrate(50);
 });
 
-mineCanvas.classList.add("clicked");
-setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
-
+// Спавн монетки
 function spawnCoin() {
-  const coin = document.createElement('div');
-  coin.classList.add('coin');
-  coin.textContent = '🪙';
+  const coin = document.createElement("div");
+  coin.classList.add("coin");
+  coin.textContent = "🪙";
   coinsContainer.appendChild(coin);
 
   setTimeout(() => {

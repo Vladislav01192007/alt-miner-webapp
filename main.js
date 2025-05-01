@@ -115,6 +115,24 @@ image.src = "logo-transparent-circle.png"; // твоя кругла картин
 image.onload = () => {
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 };
+const mineCanvas = document.getElementById("mineCanvas");
+const ctx = mineCanvas.getContext("2d");
+const img = new Image();
+img.src = "logo-transparent-circle.png"; // твоя картинка
+
+img.onload = () => {
+  drawMineButton();
+};
+
+function drawMineButton() {
+  ctx.clearRect(0, 0, mineCanvas.width, mineCanvas.height);
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(90, 90, 90, 0, Math.PI * 2);
+  ctx.clip();
+  ctx.drawImage(img, 0, 0, 180, 180);
+  ctx.restore();
+}
 
 function spawnCoin() {
   const coin = document.createElement('div');

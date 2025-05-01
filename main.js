@@ -133,6 +133,12 @@ function drawMineButton() {
   ctx.drawImage(img, 0, 0, 180, 180);
   ctx.restore();
 }
+mineCanvas.addEventListener("click", () => {
+  alt++;
+  updateAltDisplay();
+  saveProgress();
+  spawnCoin();
+});
 
 function spawnCoin() {
   const coin = document.createElement('div');

@@ -43,14 +43,52 @@ window.addEventListener("load", () => {
 });
 
 // ==== Кнопка майнінгу ====
-const mineButton = document.getElementById("mineButton");
-const coinsContainer = document.getElementById("coins-container");
+const canvas = document.getElementById("mineCanvas");
+const ctx = canvas.getContext("2d");
 
-mineButton.addEventListener("click", () => {
+// Намалювати кнопку
+function drawButton() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Коло
+  ctx.beginPath();
+  ctx.arc(90, 90, 85, 0, 2 * Math.PI);
+  ctx.fillStyle = "#00ffff";
+  ctx.fill();
+
+  // Градієнтне світіння
+  const gradient = ctx.createRadialGradient(90, 90, 10, 90, 90, 85);
+  gradient.addColorStop(0, "#ffffff55");
+  gradient.addColorStop(1, "#00ffff");
+
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 8;
+  ctx.stroke();
+
+  // Текст або іконка
+  ctx.fillStyle = "#000";
+  ctx.font = "bold 24px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("MINE", 90, 90);
+}
+
+drawButton();
+
+// Натискання на Canvas-кнопку
+canvas.addEventListener("click", () => {
   alt++;
   updateAltDisplay();
   saveProgress();
   spawnCoin();
+
+  // анімація натискання (скорочене світло)
+  ctx.globalAlpha = 0.8;
+  drawButton();
+  setTimeout(() => {
+    ctx.globalAlpha = 1;
+    drawButton();
+  }, 100);
 });
 
 function spawnCoin() {

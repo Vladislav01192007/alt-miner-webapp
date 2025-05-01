@@ -55,16 +55,17 @@ img.onload = () => {
 };
 
 // Малюємо картинку всередині круглої кнопки
-function drawMineButton() {
+function drawMineButton(scale = 1) {
   ctx.clearRect(0, 0, mineCanvas.width, mineCanvas.height);
   ctx.save();
+  ctx.translate(90, 90); // центр координат
+  ctx.scale(scale, scale);
   ctx.beginPath();
-  ctx.arc(90, 90, 90, 0, Math.PI * 2);
+  ctx.arc(0, 0, 90, 0, Math.PI * 2);
   ctx.clip();
-  ctx.drawImage(img, 0, 0, 180, 180);
+  ctx.drawImage(img, -90, -90, 180, 180);
   ctx.restore();
 }
-
 // Обробка кліку по кнопці
 mineCanvas.addEventListener("click", () => {
   alt++;
@@ -73,10 +74,8 @@ mineCanvas.addEventListener("click", () => {
   spawnCoin();
 
  // Анімація натискання (відображається візуально)
-  mineCanvas.style.transform = "scale(0.92)";
-  setTimeout(() => {
-    mineCanvas.style.transform = "scale(1)";
-  }, 100);
+  drawMineButton(0.92); // зменшена кнопка
+  setTimeout(() => drawMineButton(1), 100); // повернення до нормального розміру
 
   // Вібрація, якщо підтримується
   if (navigator.vibrate) navigator.vibrate(50);

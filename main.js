@@ -33,7 +33,7 @@ function saveProgress() {
   localStorage.setItem("alt", alt);
   localStorage.setItem("altPerSecond", altPerSecond);
   localStorage.setItem("upgrades", JSON.stringify(upgrades));
-}
+}  
 
 // ==== Початок гри ====
 window.addEventListener("load", () => {
@@ -72,9 +72,11 @@ mineCanvas.addEventListener("click", () => {
   saveProgress();
   spawnCoin();
 
-  // Ефект натискання
-  mineCanvas.classList.add("clicked");
-  setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
+ // Анімація натискання (відображається візуально)
+  mineCanvas.style.transform = "scale(0.92)";
+  setTimeout(() => {
+    mineCanvas.style.transform = "scale(1)";
+  }, 100);
 
   // Вібрація, якщо підтримується
   if (navigator.vibrate) navigator.vibrate(50);

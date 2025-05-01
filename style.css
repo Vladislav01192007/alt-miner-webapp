@@ -97,6 +97,11 @@ p {
   animation: pulseGlow 2s infinite;
 }
 
+#mineCanvas.clicked {
+  transform: scale(0.92);
+  transition: transform 0.1s ease;
+}
+
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
   50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }

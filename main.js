@@ -140,6 +140,9 @@ mineCanvas.addEventListener("click", () => {
   spawnCoin();
 });
 
+mineCanvas.classList.add("clicked");
+setTimeout(() => mineCanvas.classList.remove("clicked"), 100);
+
 function spawnCoin() {
   const coin = document.createElement('div');
   coin.classList.add('coin');

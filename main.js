@@ -67,6 +67,8 @@ function drawMineButton(scale = 1) {
   ctx.restore();
 }
 // Обробка кліку по кнопці
+const mineCanvas = document.getElementById("mineCanvas")
+
 mineCanvas.addEventListener("click", () => {
   alt++;
   updateAltDisplay();

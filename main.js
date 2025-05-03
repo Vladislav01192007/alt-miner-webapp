@@ -185,3 +185,15 @@ window.addEventListener("load", () => {
 });
 
 minerButton.addEventListener("click", startMiner);
+
+document.getElementById(tabId).style.display = "block";
+
+if (tabId === 'socials-tab') {
+  const socialsList = document.querySelector('.socials-list');
+  if (socialsList) {
+    socialsList.classList.remove('animate'); // скидає
+    void socialsList.offsetWidth; // перезапуск анімації
+    socialsList.classList.add('animate');    // запускає знову
+  }
+}
+

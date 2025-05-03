@@ -186,14 +186,24 @@ window.addEventListener("load", () => {
 
 minerButton.addEventListener("click", startMiner);
 
-document.getElementById(tabId).style.display = "block";
+function showTab(tabId) {
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.style.display = "none";
+  });
+  document.getElementById(tabId).style.display = "block";
 
-if (tabId === 'socials-tab') {
-  const socialsList = document.querySelector('.socials-list');
-  if (socialsList) {
-    socialsList.classList.remove('animate'); // скидає
-    void socialsList.offsetWidth; // перезапуск анімації
-    socialsList.classList.add('animate');    // запускає знову
+  if (tabId === 'quiz-tab') {
+    currentQuestion = 0;
+    quizScore = 0;
+    loadQuiz();
+  }
+
+  if (tabId === 'socials-tab') {
+    const socialsList = document.querySelector('.socials-list');
+    if (socialsList) {
+      socialsList.classList.remove('animate');
+      void socialsList.offsetWidth;
+      socialsList.classList.add('animate');
+    }
   }
 }
-

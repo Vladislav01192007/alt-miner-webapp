@@ -5,99 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ALTSETING Miner</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    #loader-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-    #loader-logo {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      animation: appear 1.5s ease-out forwards, glow 1.5s infinite alternate;
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 10px #ffa500, 0 0 20px #ffa500, 0 0 30px #ff6f00; }
-      to { box-shadow: 0 0 20px #ff6f00, 0 0 30px #ff4500, 0 0 40px #ff0000; }
-    }
-    @keyframes appear {
-      0% { opacity: 0; transform: scale(0.8); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    .loading-text {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .progress-container {
-      width: 80%;
-      height: 10px;
-      background: #333;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, #ffa500, #ff4500);
-      animation: fillProgress 3s linear forwards;
-    }
-    @keyframes fillProgress {
-      from { width: 0%; }
-      to { width: 100%; }
-    }
-    .mine-logo-button {
-      width: 180px;
-      height: 180px;
-      border: none;
-      border-radius: 50%;
-      background: transparent;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      animation: pulseGlow 2s infinite;
-      transition: 0.3s ease;
-      overflow: hidden;
-      position: relative;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
-      backface-visibility: hidden;
-      will-change: transform;
-    }
-    .mine-logo-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      background: transparent;
-      pointer-events: none;
-    }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
-      50% { box-shadow: 0 0 30px #00ffff, 0 0 40px #00ffff; }
-      100% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
-    }
-    .mine-logo-button:hover { transform: scale(1.05); }
-    .mine-logo-button:active { transform: scale(0.95); }
-  </style>
 </head>
 <body>
+  <!-- Прелоадер -->
   <div id="loader-screen">
     <img id="loader-logo" src="logo-transparent-circle.png" alt="ALTSETING Logo">
     <div class="loading-text">Loading...</div>
@@ -106,12 +16,11 @@
     </div>
   </div>
 
+  <!-- Основний інтерфейс -->
   <div id="game-screen" class="screen active" style="display: none;">
     <div id="miner-tab" class="tab">
-      <div class="miner-box" style="position: relative; display: flex; flex-direction: column; align-items: center; margin-top: 40px;">
-        <canvas id="mineCanvas" width="180" height="180" style="border-radius: 50%; background: transparent;"></canvas>
-        <div id="coins-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-      </div>
+      <h1>Welcome to ALTSETING Miner</h1>
+      <div id="altCount">ALT: 0</div>
     </div>
 
     <div id="upgrades-tab" class="tab" style="display: none;">
@@ -132,7 +41,6 @@
 
     <div id="socials-tab" class="tab" style="display: none;">
       <h2>Join Us</h2>
-      <p>Follow us on social media:</p>
       <ul>
         <li><a href="https://x.com/altsetingtoken?s=21" target="_blank">X Twitter</a></li>
         <li><a href="https://t.me/ALTsetingtoken" target="_blank">Telegram</a></li>

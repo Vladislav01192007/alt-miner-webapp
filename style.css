@@ -192,8 +192,8 @@ p {
 /* === Кнопка-логотип майнера === */
 .logo-button {
   width: 160px;
+  height: 160px;
   aspect-ratio: 1 / 1;
-  height: auto;
   border: none;
   border-radius: 50%;
   background: transparent;

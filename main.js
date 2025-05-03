@@ -63,19 +63,6 @@ function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
 }
 
-// ==== Перемикання вкладок ====
-function showTab(tabId) {
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.style.display = "none";
-  });
-  document.getElementById(tabId).style.display = "block";
-  if (tabId === 'quiz-tab') {
-    currentQuestion = 0;
-    quizScore = 0;
-    loadQuiz();
-  }
-}
-
 // ==== ALT-геній (Міні-гра) ====
 const quizData = [
   {
@@ -186,6 +173,7 @@ window.addEventListener("load", () => {
 
 minerButton.addEventListener("click", startMiner);
 
+// ==== Перемикання вкладок ====
 function showTab(tabId) {
   document.querySelectorAll(".tab").forEach(tab => {
     tab.style.display = "none";

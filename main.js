@@ -126,3 +126,62 @@ function checkAnswer(index) {
     document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
   }
 }
+
+// ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
+const minerButton = document.getElementById("startMinerButton");
+let miningInterval;
+const miningDuration = 5 * 60 * 60 * 1000; // 5 годин у мс
+const miningRate = 1000; // 1 секунда
+
+function startMiner() {
+  const now = Date.now();
+  const lastStart = parseInt(localStorage.getItem("lastMinerStartTime") || "0");
+
+  if (now - lastStart < miningDuration) {
+    alert("Майнер вже працює або ще не готовий. Зачекай 5 годин.");
+    return;
+  }
+
+  localStorage.setItem("lastMinerStartTime", now.toString());
+  let elapsed = 0;
+  minerButton.disabled = true;
+
+  miningInterval = setInterval(() => {
+    elapsed += miningRate;
+    alt += 1;
+    updateAltDisplay();
+    saveProgress();
+
+    if (elapsed >= miningDuration) {
+      clearInterval(miningInterval);
+      minerButton.disabled = false;
+    }
+  }, miningRate);
+}
+
+window.addEventListener("load", () => {
+  const lastStart = parseInt(localStorage.getItem("lastMinerStartTime") || "0");
+  const now = Date.now();
+  const timePassed = now - lastStart;
+
+  if (timePassed < miningDuration) {
+    let elapsed = timePassed;
+    minerButton.disabled = true;
+
+    miningInterval = setInterval(() => {
+      elapsed += miningRate;
+      alt += 1;
+      updateAltDisplay();
+      saveProgress();
+
+      if (elapsed >= miningDuration) {
+        clearInterval(miningInterval);
+        minerButton.disabled = false;
+      }
+    }, miningRate);
+  } else {
+    minerButton.disabled = false;
+  }
+});
+
+minerButton.addEventListener("click", startMiner);

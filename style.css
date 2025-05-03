@@ -134,51 +134,6 @@ p {
   font-size: 1.2em;
 }
 
-/* === Футер === */
-footer {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 500px;
-  background: #111;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 20px;
-  border-radius: 20px;
-  z-index: 1000;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-  border: 2px solid #00ffff;
-}
-
-.nav-button-container {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-btn {
-  color: #00ffff;
-  font-size: 14px;
-  text-align: center;
-  flex: 1;
-  max-width: 100px;
-  padding: 8px 0;
-  border-radius: 15px;
-  transition: 0.2s ease;
-}
-.nav-btn:hover {
-  transform: scale(1.1);
-  background: rgba(0, 255, 255, 0.1);
-}
-.nav-btn:active {
-  transform: scale(0.95);
-  background: rgba(0, 255, 255, 0.2);
-}
-
 /* === Квіз === */
 #quiz-options button {
   display: block;
@@ -251,4 +206,35 @@ footer {
 @keyframes fillProgress {
   from { width: 0%; }
   to { width: 100%; }
+}
+
+/* === Кнопка-логотип майнера === */
+.logo-button {
+  width: 160px;
+  height: 160px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: glowPulse 2s infinite;
+  transition: transform 0.2s ease;
+}
+.logo-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  animation: none;
+}
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 10px #00ffff; }
+  50% { box-shadow: 0 0 25px #00ffff; }
+  100% { box-shadow: 0 0 10px #00ffff; }
 }

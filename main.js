@@ -33,67 +33,13 @@ function saveProgress() {
   localStorage.setItem("alt", alt);
   localStorage.setItem("altPerSecond", altPerSecond);
   localStorage.setItem("upgrades", JSON.stringify(upgrades));
-}  
+}
 
 // ==== Початок гри ====
 window.addEventListener("load", () => {
   document.getElementById("game-screen").style.display = "block";
   loadProgress();
-  startMiningLoop();
 });
-
-// ==== Кнопка майнінгу ====
-const mineCanvas = document.getElementById("mineCanvas");
-const ctx = mineCanvas.getContext("2d");
-const coinsContainer = document.getElementById("coins-container");
-
-const img = new Image();
-img.src = "logo-transparent-circle.png"; // твоя картинка
-
-img.onload = () => {
-  drawMineButton();
-};
-
-// Малюємо картинку всередині круглої кнопки
-function drawMineButton(scale = 1) {
-  ctx.clearRect(0, 0, mineCanvas.width, mineCanvas.height);
-  ctx.save();
-  ctx.translate(90, 90); // центр координат
-  ctx.scale(scale, scale);
-  ctx.beginPath();
-  ctx.arc(0, 0, 90, 0, Math.PI * 2);
-  ctx.clip();
-  ctx.drawImage(img, -90, -90, 180, 180);
-  ctx.restore();
-}
-// Обробка кліку по кнопці
-const mineCanvas = document.getElementById("mineCanvas")
-
-mineCanvas.addEventListener("click", () => {
-  alt++;
-  updateAltDisplay();
-  saveProgress();
-  spawnCoin();
-
- // Анімація натискання (відображається візуально)
-  drawMineButton(0.92); // зменшена кнопка
-  setTimeout(() => drawMineButton(1), 100); // повернення до нормального розміру
-
-  // Вібрація, якщо підтримується
-  if (navigator.vibrate) navigator.vibrate(50);
-});
-
-// Спавн монетки
-function spawnCoin() {
-  const coin = document.createElement("div");
-  coin.classList.add("coin");
-  coin.textContent = "🪙";
-  coinsContainer.appendChild(coin);
-
-  setTimeout(() => {
-    coin.remove();
-  }, 1000);
-}
 
 // ==== Покупка апгрейдів ====
 upgrades.forEach(upgrade => {
@@ -111,15 +57,6 @@ upgrades.forEach(upgrade => {
     }
   });
 });
-
-// ==== Автоматичний майнінг ====
-function startMiningLoop() {
-  setInterval(() => {
-    alt += altPerSecond;
-    updateAltDisplay();
-    saveProgress();
-  }, 1000);
-}
 
 // ==== Оновлення відображення ====
 function updateAltDisplay() {
@@ -189,11 +126,3 @@ function checkAnswer(index) {
     document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
   }
 }
-
-// ==== Функція для спавну монетки при кліку ====
-
-
-// Блокуємо скрол або рух на кнопці при натисканні
-mineButton.addEventListener('touchmove', (e) => {
-  e.preventDefault();
-}, { passive: false });

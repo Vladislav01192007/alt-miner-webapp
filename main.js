@@ -195,3 +195,14 @@ function showTab(tabId) {
     }
   }
 }
+
+
+// ==== Надіслати ALT у Telegram Bot ====
+function sendAltToBot() {
+  if (window.Telegram && Telegram.WebApp) {
+    Telegram.WebApp.sendData(String(alt));
+    alert("📤 ALT надіслано у бот!");
+  } else {
+    alert("❌ Telegram WebApp API недоступне.");
+  }
+}

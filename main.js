@@ -63,57 +63,6 @@ function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
 }
 
-// ==== ALT-геній (Міні-гра) ====
-const quizData = [
-  {
-    question: "Що таке ALTSETING Token?",
-    options: ["Нова криптовалюта", "Назва піци", "Гра про хом’яків"],
-    correct: 0
-  },
-  {
-    question: "Скільки NFT-майнерів планується?",
-    options: ["50", "100", "500"],
-    correct: 1
-  },
-];
-
-let currentQuestion = 0;
-let quizScore = 0;
-
-function loadQuiz() {
-  const q = quizData[currentQuestion];
-  document.getElementById('quiz-question').textContent = q.question;
-  const optionsDiv = document.getElementById('quiz-options');
-  optionsDiv.innerHTML = '';
-  q.options.forEach((opt, idx) => {
-    const btn = document.createElement('button');
-    btn.textContent = opt;
-    btn.onclick = () => checkAnswer(idx);
-    optionsDiv.appendChild(btn);
-  });
-}
-
-function checkAnswer(index) {
-  if (index === quizData[currentQuestion].correct) {
-    quizScore++;
-    alert("✅ Правильно!");
-  } else {
-    alert("❌ Ні, подумай ще.");
-  }
-
-  currentQuestion++;
-  if (currentQuestion < quizData.length) {
-    loadQuiz();
-  } else {
-    const reward = quizScore * 5;
-    alt += reward;
-    updateAltDisplay();
-    saveProgress();
-    document.getElementById('quiz-question').textContent = `Тест завершено! Результат: ${quizScore}/${quizData.length}`;
-    document.getElementById('quiz-options').innerHTML = `🎉 Ти отримав ${reward} ALT!`;
-  }
-}
-
 // ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
 const minerButton = document.getElementById("startMinerButton");
 let miningInterval;
@@ -180,12 +129,6 @@ function showTab(tabId) {
   });
   document.getElementById(tabId).style.display = "block";
 
-  if (tabId === 'quiz-tab') {
-    currentQuestion = 0;
-    quizScore = 0;
-    loadQuiz();
-  }
-
   if (tabId === 'socials-tab') {
     const socialsList = document.querySelector('.socials-list');
     if (socialsList) {
@@ -195,7 +138,6 @@ function showTab(tabId) {
     }
   }
 }
-
 
 // ==== Надіслати ALT у Telegram Bot ====
 function sendAltToBot() {

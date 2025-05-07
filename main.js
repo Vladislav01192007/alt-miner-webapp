@@ -1,3 +1,4 @@
+
 // ==== Глобальні змінні ====
 let alt = 0;
 let altPerSecond = 0;
@@ -139,12 +140,21 @@ function showTab(tabId) {
   }
 }
 
+// ==== Перевірка Telegram WebApp API після завантаження ====
+window.addEventListener("load", () => {
+  if (typeof Telegram === 'undefined' || typeof Telegram.WebApp === 'undefined') {
+    console.warn("Telegram WebApp API недоступне.");
+  } else {
+    console.log("✅ Telegram WebApp API доступне.");
+  }
+});
+
 // ==== Надіслати ALT у Telegram Bot ====
 function sendAltToBot() {
-  if (window.Telegram && Telegram.WebApp) {
+  if (typeof Telegram !== "undefined" && Telegram.WebApp) {
     Telegram.WebApp.sendData(String(alt));
     alert("📤 ALT надіслано у бот!");
   } else {
-    alert("❌ Telegram WebApp API недоступне.");
+    alert("❌ Telegram WebApp API недоступне. Відкрий через Telegram.");
   }
 }

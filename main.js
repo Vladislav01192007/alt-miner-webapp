@@ -1,4 +1,3 @@
-
 // ==== Глобальні змінні ====
 let alt = 0;
 let altPerSecond = 0;
@@ -67,7 +66,7 @@ function updateAltDisplay() {
 // ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
 const minerButton = document.getElementById("startMinerButton");
 let miningInterval;
-const miningDuration = 5 * 60 * 60 * 1000; // 5 годин у мс
+const miningDuration = 5 * 60 * 60 * 1000; // 5 годин
 const miningRate = 1000; // 1 секунда
 
 function startMiner() {
@@ -140,7 +139,7 @@ function showTab(tabId) {
   }
 }
 
-// ==== Перевірка Telegram WebApp API після завантаження ====
+// ==== Перевірка Telegram WebApp API ====
 window.addEventListener("load", () => {
   if (typeof Telegram === 'undefined' || typeof Telegram.WebApp === 'undefined') {
     console.warn("Telegram WebApp API недоступне.");
@@ -149,12 +148,3 @@ window.addEventListener("load", () => {
   }
 });
 
-// ==== Надіслати ALT у Telegram Bot ====
-function sendAltToBot() {
-  if (typeof Telegram !== "undefined" && Telegram.WebApp) {
-    Telegram.WebApp.sendData(String(alt));
-    alert("📤 ALT надіслано у бот!");
-  } else {
-    alert("❌ Telegram WebApp API недоступне. Відкрий через Telegram.");
-  }
-}

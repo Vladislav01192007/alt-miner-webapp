@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Прелоадер -->
   <div id="loader-screen">
     <img id="loader-logo" src="logo-transparent-circle.png" alt="ALTSETING Logo">
     <div class="loading-text">Loading...</div>
@@ -16,8 +15,8 @@
     </div>
   </div>
 
-  <!-- Основний інтерфейс -->
   <div id="game-screen" class="screen active" style="display: none;">
+    <!-- TAB: Miner -->
     <div id="miner-tab" class="tab">
       <div class="miner-box" style="display: flex; justify-content: center; margin-top: 20px;">
         <button id="startMinerButton" class="logo-button">
@@ -27,6 +26,7 @@
       <div id="altCount">ALT: 0</div>
     </div>
 
+    <!-- TAB: Upgrades -->
     <div id="upgrades-tab" class="tab" style="display: none;">
       <h2>Upgrades</h2>
       <div class="upgrade" id="upgrade1">
@@ -43,6 +43,7 @@
       </div>
     </div>
 
+    <!-- TAB: Socials -->
     <div id="socials-tab" class="tab" style="display: none;">
       <h2>🌐 Follow Us</h2>
       <div class="socials-list">
@@ -54,13 +55,23 @@
       </div>
     </div>
 
-    <!-- Гаманець -->
+    <!-- TAB: Wallet -->
     <div id="wallet-tab" class="tab" style="display: none;">
-      <h2>👛 Гаманець</h2>
-      <p>Натисни нижче, щоб відкрити свій гаманець у Telegram-боті</p>
-      <button onclick="openWallet()">Відкрити гаманець 🔐</button>
+      <h2>👛 ALTSETING Wallet</h2>
+      <div class="wallet-container">
+        <div class="wallet-balance glass">
+          <div><strong>ALT:</strong> <span id="walletAlt">0</span></div>
+          <div><strong>ALTST:</strong> <span id="walletAltst">0</span></div>
+        </div>
+        <div class="wallet-actions">
+          <button class="neon-button" onclick="convertAlt()">💱 Обміняти 10 ALT → 1 ALTST</button>
+          <button class="neon-button disabled">🧬 Реферал (скоро)</button>
+        </div>
+        <div id="wallet-message" class="wallet-message"></div>
+      </div>
     </div>
 
+    <!-- Footer Navigation -->
     <footer>
       <div class="nav-button-container">
         <div class="nav-btn" onclick="showTab('miner-tab')">⛏️<br>Miner</div>
@@ -73,14 +84,6 @@
 
   <script src="main.js"></script>
   <script>
-    function openWallet() {
-      if (window.Telegram && Telegram.WebApp) {
-        Telegram.WebApp.openTelegramLink("https://t.me/altseting_miner_bot?start=wallet");
-      } else {
-        alert("Telegram WebApp API недоступне.");
-      }
-    }
-
     window.onload = function() {
       setTimeout(() => {
         document.getElementById('loader-screen').style.display = 'none';

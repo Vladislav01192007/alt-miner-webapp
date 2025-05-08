@@ -39,6 +39,7 @@ function saveProgress() {
 window.addEventListener("load", () => {
   document.getElementById("game-screen").style.display = "block";
   loadProgress();
+  updateWalletDisplay();
 });
 
 // ==== Покупка апгрейдів ====
@@ -58,7 +59,7 @@ upgrades.forEach(upgrade => {
   });
 });
 
-// ==== Оновлення відображення ====
+// ==== Оновлення відображення ALT ====
 function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
 }
@@ -66,8 +67,8 @@ function updateAltDisplay() {
 // ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
 const minerButton = document.getElementById("startMinerButton");
 let miningInterval;
-const miningDuration = 5 * 60 * 60 * 1000; // 5 годин
-const miningRate = 1000; // 1 секунда
+const miningDuration = 5 * 60 * 60 * 1000;
+const miningRate = 1000;
 
 function startMiner() {
   const now = Date.now();
@@ -137,9 +138,40 @@ function showTab(tabId) {
       socialsList.classList.add('animate');
     }
   }
+
+  if (tabId === 'wallet-tab') {
+    updateWalletDisplay();
+  }
 }
 
-// ==== Перевірка Telegram WebApp API ====
+// ==== Обмін ALT на ALTST ====
+function convertAlt() {
+  const alt = parseInt(localStorage.getItem("alt") || "0");
+  let altst = parseInt(localStorage.getItem("altst") || "0");
+
+  if (alt < 10) {
+    document.getElementById("wallet-message").textContent = "❌ Недостатньо ALT для обміну!";
+    return;
+  }
+
+  const newAltst = Math.floor(alt / 10);
+  const remainingAlt = alt % 10;
+
+  localStorage.setItem("alt", remainingAlt);
+  localStorage.setItem("altst", altst + newAltst);
+
+  document.getElementById("wallet-message").textContent = `✅ Обмін успішний: ${newAltst} ALTST`;
+  updateAltDisplay();
+  updateWalletDisplay();
+  saveProgress();
+}
+
+function updateWalletDisplay() {
+  document.getElementById("walletAlt").textContent = localStorage.getItem("alt") || "0";
+  document.getElementById("walletAltst").textContent = localStorage.getItem("altst") || "0";
+}
+
+// ==== Telegram WebApp API ====
 window.addEventListener("load", () => {
   if (typeof Telegram === 'undefined' || typeof Telegram.WebApp === 'undefined') {
     console.warn("Telegram WebApp API недоступне.");
@@ -147,4 +179,3 @@ window.addEventListener("load", () => {
     console.log("✅ Telegram WebApp API доступне.");
   }
 });
-

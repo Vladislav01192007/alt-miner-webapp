@@ -23,6 +23,7 @@ function loadProgress() {
   }
 
   updateAltDisplay();
+  updateWalletDisplay();
   upgrades.forEach(upg => {
     document.getElementById(`${upg.id}Cost`).textContent = upg.cost;
   });
@@ -39,7 +40,6 @@ function saveProgress() {
 window.addEventListener("load", () => {
   document.getElementById("game-screen").style.display = "block";
   loadProgress();
-  updateWalletDisplay();
 });
 
 // ==== Покупка апгрейдів ====
@@ -52,6 +52,7 @@ upgrades.forEach(upgrade => {
       upgrade.cost = Math.floor(upgrade.cost * 1.7);
       document.getElementById(`${upgrade.id}Cost`).textContent = upgrade.cost;
       updateAltDisplay();
+      updateWalletDisplay();
       saveProgress();
     } else {
       alert("Not enough ALT!");
@@ -59,9 +60,15 @@ upgrades.forEach(upgrade => {
   });
 });
 
-// ==== Оновлення відображення ALT ====
+// ==== Оновлення ALT ====
 function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
+}
+
+// ==== Оновлення балансу у гаманці ====
+function updateWalletDisplay() {
+  document.getElementById("walletAlt").textContent = localStorage.getItem("alt") || "0";
+  document.getElementById("walletAltst").textContent = localStorage.getItem("altst") || "0";
 }
 
 // ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
@@ -87,6 +94,7 @@ function startMiner() {
     elapsed += miningRate;
     alt += 1;
     updateAltDisplay();
+    updateWalletDisplay();
     saveProgress();
 
     if (elapsed >= miningDuration) {
@@ -95,6 +103,8 @@ function startMiner() {
     }
   }, miningRate);
 }
+
+minerButton.addEventListener("click", startMiner);
 
 window.addEventListener("load", () => {
   const lastStart = parseInt(localStorage.getItem("lastMinerStartTime") || "0");
@@ -109,6 +119,7 @@ window.addEventListener("load", () => {
       elapsed += miningRate;
       alt += 1;
       updateAltDisplay();
+      updateWalletDisplay();
       saveProgress();
 
       if (elapsed >= miningDuration) {
@@ -120,8 +131,6 @@ window.addEventListener("load", () => {
     minerButton.disabled = false;
   }
 });
-
-minerButton.addEventListener("click", startMiner);
 
 // ==== Перемикання вкладок ====
 function showTab(tabId) {
@@ -146,29 +155,28 @@ function showTab(tabId) {
 
 // ==== Обмін ALT на ALTST ====
 function convertAlt() {
-  const alt = parseInt(localStorage.getItem("alt") || "0");
-  let altst = parseInt(localStorage.getItem("altst") || "0");
+  const currentAlt = parseInt(localStorage.getItem("alt") || "0");
+  let currentAltst = parseInt(localStorage.getItem("altst") || "0");
 
-  if (alt < 10) {
+  if (currentAlt < 10) {
     document.getElementById("wallet-message").textContent = "❌ Недостатньо ALT для обміну!";
     return;
   }
 
-  const newAltst = Math.floor(alt / 10);
-  const remainingAlt = alt % 10;
+  const altToConvert = Math.floor(currentAlt / 10);
+  const remainingAlt = currentAlt % 10;
+  const newAltst = currentAltst + altToConvert;
 
   localStorage.setItem("alt", remainingAlt);
-  localStorage.setItem("altst", altst + newAltst);
+  localStorage.setItem("altst", newAltst);
 
-  document.getElementById("wallet-message").textContent = `✅ Обмін успішний: ${newAltst} ALTST`;
+  document.getElementById("wallet-message").textContent =
+    `✅ Обміняно ${altToConvert * 10} ALT → ${altToConvert} ALTST. Залишок: ${remainingAlt} ALT`;
+
+  alt = remainingAlt;
   updateAltDisplay();
   updateWalletDisplay();
   saveProgress();
-}
-
-function updateWalletDisplay() {
-  document.getElementById("walletAlt").textContent = localStorage.getItem("alt") || "0";
-  document.getElementById("walletAltst").textContent = localStorage.getItem("altst") || "0";
 }
 
 // ==== Telegram WebApp API ====

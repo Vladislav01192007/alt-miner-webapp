@@ -65,9 +65,10 @@
         </div>
         <div class="wallet-actions">
           <button class="neon-button" onclick="convertAlt()">💱 Обміняти 10 ALT → 1 ALTST</button>
-          <button class="neon-button disabled">🧬 Реферал (скоро)</button>
+          <button class="neon-button" onclick="showReferral()">🧬 Моя реферальна сила</button>
         </div>
         <div id="wallet-message" class="wallet-message"></div>
+        <div id="referral-container" style="margin-top: 15px; word-break: break-all; color: #0ff; text-align: center;"></div>
       </div>
     </div>
 
@@ -84,6 +85,18 @@
 
   <script src="main.js"></script>
   <script>
+    function showReferral() {
+      if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
+        const userId = Telegram.WebApp.initDataUnsafe.user.id;
+        const refLink = `https://t.me/altseting_miner_bot?start=${userId}`;
+        document.getElementById("referral-container").innerHTML =
+          `🔗 <strong>Твоє посилання:</strong><br><span>${refLink}</span>`;
+      } else {
+        document.getElementById("referral-container").textContent =
+          "⚠️ Не вдалося отримати твій Telegram ID.";
+      }
+    }
+
     window.onload = function() {
       setTimeout(() => {
         document.getElementById('loader-screen').style.display = 'none';
@@ -93,4 +106,3 @@
   </script>
 </body>
 </html>
-

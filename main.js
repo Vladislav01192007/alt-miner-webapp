@@ -65,13 +65,13 @@ function updateAltDisplay() {
   document.getElementById("altCount").textContent = alt;
 }
 
-// ==== Оновлення балансу у гаманці ====
+// ==== Оновлення гаманця ====
 function updateWalletDisplay() {
   document.getElementById("walletAlt").textContent = localStorage.getItem("alt") || "0";
   document.getElementById("walletAltst").textContent = localStorage.getItem("altst") || "0";
 }
 
-// ==== АвтоМайнер по 1 ALT/сек протягом 5 годин ====
+// ==== АвтоМайнер по 1 ALT/сек на 5 годин ====
 const minerButton = document.getElementById("startMinerButton");
 let miningInterval;
 const miningDuration = 5 * 60 * 60 * 1000;
@@ -106,6 +106,7 @@ function startMiner() {
 
 minerButton.addEventListener("click", startMiner);
 
+// ==== Відновлення після перезавантаження ====
 window.addEventListener("load", () => {
   const lastStart = parseInt(localStorage.getItem("lastMinerStartTime") || "0");
   const now = Date.now();
@@ -150,10 +151,11 @@ function showTab(tabId) {
 
   if (tabId === 'wallet-tab') {
     updateWalletDisplay();
+    loadReferralStats();
   }
 }
 
-// ==== Обмін ALT на ALTST ====
+// ==== Обмін ALT → ALTST ====
 function convertAlt() {
   const currentAlt = parseInt(localStorage.getItem("alt") || "0");
   let currentAltst = parseInt(localStorage.getItem("altst") || "0");
@@ -179,7 +181,38 @@ function convertAlt() {
   saveProgress();
 }
 
-// ==== Telegram WebApp API ====
+// ==== Показати реферальне посилання ====
+function showReferral() {
+  if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
+    const userId = Telegram.WebApp.initDataUnsafe.user.id;
+    const refLink = `https://t.me/altseting_miner_bot?start=${userId}`;
+    document.getElementById("referral-container").innerHTML =
+      `🔗 <strong>Твоє посилання:</strong><br><span>${refLink}</span>`;
+  } else {
+    document.getElementById("referral-container").textContent =
+      "⚠️ Не вдалося отримати твій Telegram ID.";
+  }
+}
+
+// ==== Завантаження реферальної статистики ====
+function loadReferralStats() {
+  if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
+    const userId = Telegram.WebApp.initDataUnsafe.user.id;
+    fetch(`https://python-bot-1-33f9.onrender.com/stats/${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        const { referrals = 0, bonus = 0 } = data;
+        document.getElementById("referral-stats").innerHTML =
+          `👥 Запрошено друзів: <b>${referrals}</b><br>🎁 Отримано бонусів: <b>${bonus} ALT</b>`;
+      })
+      .catch(() => {
+        document.getElementById("referral-stats").textContent =
+          "⚠️ Не вдалося завантажити статистику.";
+      });
+  }
+}
+
+// ==== Telegram WebApp API перевірка ====
 window.addEventListener("load", () => {
   if (typeof Telegram === 'undefined' || typeof Telegram.WebApp === 'undefined') {
     console.warn("Telegram WebApp API недоступне.");

@@ -55,22 +55,30 @@
       </div>
     </div>
 
-    <!-- TAB: Wallet -->
-    <div id="wallet-tab" class="tab" style="display: none;">
-      <h2>👛 ALTSETING Wallet</h2>
-      <div class="wallet-container">
-        <div class="wallet-balance glass">
-          <div><strong>ALT:</strong> <span id="walletAlt">0</span></div>
-          <div><strong>ALTST:</strong> <span id="walletAltst">0</span></div>
-        </div>
-        <div class="wallet-actions">
-          <button class="neon-button" onclick="convertAlt()">💱 Обміняти 10 ALT → 1 ALTST</button>
-          <button class="neon-button" onclick="showReferral()">🧬 Моя реферальна сила</button>
-        </div>
-        <div id="wallet-message" class="wallet-message"></div>
-        <div id="referral-container" style="margin-top: 15px; word-break: break-all; color: #0ff; text-align: center;"></div>
-      </div>
+  <!-- TAB: Wallet -->
+<div id="wallet-tab" class="tab" style="display: none;">
+  <h2>👛 ALTSETING Wallet</h2>
+  <div class="wallet-container">
+    <div class="wallet-balance glass">
+      <div><strong>ALT:</strong> <span id="walletAlt">0</span></div>
+      <div><strong>ALTST:</strong> <span id="walletAltst">0</span></div>
     </div>
+
+    <div class="wallet-actions">
+      <button class="neon-button" onclick="convertAlt()">💱 Обміняти 10 ALT → 1 ALTST</button>
+      <button class="neon-button" onclick="showReferral()">🧬 Моя реферальна сила</button>
+    </div>
+
+    <div id="wallet-message" class="wallet-message"></div>
+
+    <!-- Реферальне посилання -->
+    <div id="referral-container" style="margin-top: 15px; word-break: break-all; color: #0ff; text-align: center;"></div>
+
+    <!-- Реферальна статистика -->
+    <div id="referral-stats" style="margin-top: 20px; text-align: center; font-size: 14px; color: #ccc;"></div>
+  </div>
+</div>
+
 
     <!-- Footer Navigation -->
     <footer>

@@ -85,31 +85,12 @@
         <div class="nav-btn" onclick="showTab('miner-tab')">⛏️<br>Miner</div>
         <div class="nav-btn" onclick="showTab('upgrades-tab')">⚙️<br>Upgrades</div>
         <div class="nav-btn" onclick="showTab('socials-tab')">🌐<br>Socials</div>
-        <div class="nav-btn" onclick="showTab('wallet-tab')">👛<br>Гаманець</div>
+        <div class="nav-btn" onclick="showTab('wallet-tab')">👛<br>Wallet</div>
       </div>
     </footer>
   </div>
 
   <script src="main.js"></script>
-  <script>
-    function showReferral() {
-      if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
-        const userId = Telegram.WebApp.initDataUnsafe.user.id;
-        const refLink = `https://t.me/altseting_miner_bot?start=${userId}`;
-        document.getElementById("referral-container").innerHTML =
-          `🔗 <strong>Твоє посилання:</strong><br><span>${refLink}</span>`;
-      } else {
-        document.getElementById("referral-container").textContent =
-          "⚠️ Не вдалося отримати твій Telegram ID.";
-      }
-    }
-
-    window.onload = function() {
-      setTimeout(() => {
-        document.getElementById('loader-screen').style.display = 'none';
-        document.getElementById('game-screen').style.display = 'block';
-      }, 3000);
-    };
-  </script>
+ 
 </body>
 </html>

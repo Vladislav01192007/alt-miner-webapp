@@ -125,7 +125,7 @@ p {
   font-weight: bold;
   color: #00ffaa;
   text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffee;
-  display: inline-flex;
+  display: center;
   align-items: center;
   gap: 8px;
 }

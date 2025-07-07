@@ -179,7 +179,7 @@ function convertAlt() {
   let currentAltst = parseInt(localStorage.getItem("altst") || "0");
 
   if (currentAlt < 10) {
-    document.getElementById("wallet-message").textContent = "❌ Недостатньо ALT для обміну!";
+    document.getElementById("wallet-message").textContent = "";
     return;
   }
 
@@ -191,7 +191,7 @@ function convertAlt() {
   localStorage.setItem("altst", newAltst);
 
   document.getElementById("wallet-message").textContent =
-    `✅ Обміняно ${altToConvert * 10} ALT → ${altToConvert} ALTST. Залишок: ${remainingAlt} ALT`;
+    ``;
 
   alt = remainingAlt;
   updateAltDisplay();
@@ -208,7 +208,7 @@ function showReferral() {
       `🔗 <strong>Твоє посилання:</strong><br><span>${refLink}</span>`;
   } else {
     document.getElementById("referral-container").textContent =
-      "⚠️ Не вдалося отримати твій Telegram ID.";
+      "";
   }
 }
 

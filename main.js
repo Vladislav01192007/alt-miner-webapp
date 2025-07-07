@@ -199,33 +199,3 @@ function convertAlt() {
   saveProgress();
 }
 
-// ==== Реферальне посилання ====
-function showReferral() {
-  if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
-    const userId = Telegram.WebApp.initDataUnsafe.user.id;
-    const refLink = `https://t.me/altseting_miner_bot?start=${userId}`;
-    document.getElementById("referral-container").innerHTML =
-      `🔗 <strong>Твоє посилання:</strong><br><span>${refLink}</span>`;
-  } else {
-    document.getElementById("referral-container").textContent =
-      "";
-  }
-}
-
-// ==== Статистика запрошених друзів ====
-function loadReferralStats() {
-  if (typeof Telegram !== 'undefined' && Telegram.WebApp.initDataUnsafe?.user) {
-    const userId = Telegram.WebApp.initDataUnsafe.user.id;
-    fetch(`https://python-bot-1-33f9.onrender.com/stats/${userId}`)
-      .then(res => res.json())
-      .then(data => {
-        const { referrals = 0, bonus = 0 } = data;
-        document.getElementById("referral-stats").innerHTML =
-          `👥 Запрошено друзів: <b>${referrals}</b><br>🎁 Отримано бонусів: <b>${bonus} ALT</b>`;
-      })
-      .catch(() => {
-        document.getElementById("referral-stats").textContent =
-          "⚠️ Не вдалося завантажити статистику.";
-      });
-  }
-}

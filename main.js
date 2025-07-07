@@ -198,4 +198,4 @@ function convertAlt() {
   updateWalletDisplay();
   saveProgress();
 }
-
+}

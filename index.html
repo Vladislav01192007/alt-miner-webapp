@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>ALTST Mario Demo</title>
+  <title>ALTST Mario Mobile</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
   <style>
     body { margin: 0; padding: 0; background: #000; }
@@ -19,22 +19,22 @@ class ALTSTGame extends Phaser.Scene {
   create() {
     // Рахунок
     this.score = 0;
-    this.scoreText = this.add.text(16, 16, 'ALT: 0', { fontSize: '20px', fill: '#fff' });
+    this.scoreText = this.add.text(16, 16, 'ALT: 0', { fontSize: '24px', fill: '#fff' });
 
-    // Платформи (сині прямокутники)
+    // Платформи
     this.platforms = this.physics.add.staticGroup();
     this.addPlatform(400, 580, 800, 40);
     this.addPlatform(600, 400, 200, 20);
     this.addPlatform(50, 250, 200, 20);
     this.addPlatform(750, 220, 200, 20);
 
-    // Гравець (зелений квадрат)
+    // Гравець
     this.player = this.add.rectangle(100, 450, 40, 40, 0x00ff00);
     this.physics.add.existing(this.player);
     this.player.body.setBounce(0.2);
     this.player.body.setCollideWorldBounds(true);
 
-    // Монетки (жовті кружечки)
+    // Монетки
     this.coins = this.physics.add.group();
     for (let i = 0; i < 8; i++) {
       let coin = this.add.circle(100 + i * 80, 100, 15, 0xffd700);
@@ -50,8 +50,11 @@ class ALTSTGame extends Phaser.Scene {
     // Збір монет
     this.physics.add.overlap(this.player, this.coins, this.collectCoin, null, this);
 
-    // Керування
+    // Керування клавіатурою
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    // Кнопки для телефону
+    this.createMobileControls();
   }
 
   addPlatform(x, y, width, height) {
@@ -60,18 +63,51 @@ class ALTSTGame extends Phaser.Scene {
     this.platforms.add(platform);
   }
 
+  createMobileControls() {
+    // Прозорі великі кнопки знизу екрану
+    const w = this.sys.game.config.width;
+    const h = this.sys.game.config.height;
+
+    // Ліво
+    this.leftBtn = this.add.rectangle(80, h - 80, 120, 120, 0x0000ff, 0.3).setInteractive();
+    // Право
+    this.rightBtn = this.add.rectangle(240, h - 80, 120, 120, 0x0000ff, 0.3).setInteractive();
+    // Стрибок
+    this.jumpBtn = this.add.rectangle(w - 100, h - 80, 120, 120, 0xff0000, 0.3).setInteractive();
+
+    // Стан кнопок
+    this.leftPressed = false;
+    this.rightPressed = false;
+    this.jumpPressed = false;
+
+    // Ліво
+    this.leftBtn.on('pointerdown', () => this.leftPressed = true);
+    this.leftBtn.on('pointerup', () => this.leftPressed = false);
+    this.leftBtn.on('pointerout', () => this.leftPressed = false);
+
+    // Право
+    this.rightBtn.on('pointerdown', () => this.rightPressed = true);
+    this.rightBtn.on('pointerup', () => this.rightPressed = false);
+    this.rightBtn.on('pointerout', () => this.rightPressed = false);
+
+    // Стрибок
+    this.jumpBtn.on('pointerdown', () => this.jumpPressed = true);
+    this.jumpBtn.on('pointerup', () => this.jumpPressed = false);
+    this.jumpBtn.on('pointerout', () => this.jumpPressed = false);
+  }
+
   update() {
-    // Ліво-право
-    if (this.cursors.left.isDown) {
+    // Управління для ПК
+    if (this.cursors.left.isDown || this.leftPressed) {
       this.player.body.setVelocityX(-160);
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || this.rightPressed) {
       this.player.body.setVelocityX(160);
     } else {
       this.player.body.setVelocityX(0);
     }
 
     // Стрибок
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
+    if ((this.cursors.up.isDown || this.jumpPressed) && this.player.body.touching.down) {
       this.player.body.setVelocityY(-330);
     }
   }
@@ -85,8 +121,8 @@ class ALTSTGame extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
   backgroundColor: '#111',
   physics: { default: 'arcade', arcade: { gravity: { y: 300 }, debug: false } },
   scene: ALTSTGame
@@ -96,3 +132,4 @@ new Phaser.Game(config);
 </script>
 </body>
 </html>
+

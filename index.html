@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>ALTST Mario Mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
   <style>
-    body { margin: 0; padding: 0; background: #000; }
-    canvas { display: block; margin: auto; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas { display: block; }
   </style>
 </head>
 <body>
@@ -17,29 +24,33 @@ class ALTSTGame extends Phaser.Scene {
   }
 
   create() {
+    // Висота/ширина екрану
+    this.gameWidth = this.sys.game.config.width;
+    this.gameHeight = this.sys.game.config.height;
+
     // Рахунок
     this.score = 0;
-    this.scoreText = this.add.text(16, 16, 'ALT: 0', { fontSize: '24px', fill: '#fff' });
+    this.scoreText = this.add.text(16, 16, 'ALT: 0', { fontSize: '32px', fill: '#fff' }).setDepth(2);
 
     // Платформи
     this.platforms = this.physics.add.staticGroup();
-    this.addPlatform(400, 580, 800, 40);
-    this.addPlatform(600, 400, 200, 20);
-    this.addPlatform(50, 250, 200, 20);
-    this.addPlatform(750, 220, 200, 20);
+    this.addPlatform(this.gameWidth / 2, this.gameHeight - 30, this.gameWidth, 40);
+    this.addPlatform(this.gameWidth - 100, this.gameHeight - 200, 180, 20);
+    this.addPlatform(100, this.gameHeight - 400, 180, 20);
+    this.addPlatform(this.gameWidth - 120, this.gameHeight - 600, 200, 20);
 
     // Гравець
-    this.player = this.add.rectangle(100, 450, 40, 40, 0x00ff00);
+    this.player = this.add.rectangle(80, this.gameHeight - 100, 50, 50, 0x00ff00);
     this.physics.add.existing(this.player);
     this.player.body.setBounce(0.2);
     this.player.body.setCollideWorldBounds(true);
 
     // Монетки
     this.coins = this.physics.add.group();
-    for (let i = 0; i < 8; i++) {
-      let coin = this.add.circle(100 + i * 80, 100, 15, 0xffd700);
+    for (let i = 0; i < 6; i++) {
+      let coin = this.add.circle(100 + i * 80, this.gameHeight - 600, 18, 0xffd700);
       this.physics.add.existing(coin);
-      coin.body.setBounceY(Phaser.Math.FloatBetween(0.2, 0.5));
+      coin.body.setBounceY(Phaser.Math.FloatBetween(0.2, 0.4));
       this.coins.add(coin);
     }
 
@@ -49,9 +60,6 @@ class ALTSTGame extends Phaser.Scene {
 
     // Збір монет
     this.physics.add.overlap(this.player, this.coins, this.collectCoin, null, this);
-
-    // Керування клавіатурою
-    this.cursors = this.input.keyboard.createCursorKeys();
 
     // Кнопки для телефону
     this.createMobileControls();
@@ -64,18 +72,14 @@ class ALTSTGame extends Phaser.Scene {
   }
 
   createMobileControls() {
-    // Прозорі великі кнопки знизу екрану
-    const w = this.sys.game.config.width;
-    const h = this.sys.game.config.height;
+    const w = this.gameWidth;
+    const h = this.gameHeight;
 
-    // Ліво
-    this.leftBtn = this.add.rectangle(80, h - 80, 120, 120, 0x0000ff, 0.3).setInteractive();
-    // Право
-    this.rightBtn = this.add.rectangle(240, h - 80, 120, 120, 0x0000ff, 0.3).setInteractive();
-    // Стрибок
-    this.jumpBtn = this.add.rectangle(w - 100, h - 80, 120, 120, 0xff0000, 0.3).setInteractive();
+    // Прозорі великі кнопки внизу
+    this.leftBtn = this.add.rectangle(80, h - 100, 130, 130, 0x0000ff, 0.3).setInteractive();
+    this.rightBtn = this.add.rectangle(250, h - 100, 130, 130, 0x0000ff, 0.3).setInteractive();
+    this.jumpBtn = this.add.rectangle(w - 120, h - 100, 150, 130, 0xff0000, 0.3).setInteractive();
 
-    // Стан кнопок
     this.leftPressed = false;
     this.rightPressed = false;
     this.jumpPressed = false;
@@ -97,18 +101,18 @@ class ALTSTGame extends Phaser.Scene {
   }
 
   update() {
-    // Управління для ПК
-    if (this.cursors.left.isDown || this.leftPressed) {
-      this.player.body.setVelocityX(-160);
-    } else if (this.cursors.right.isDown || this.rightPressed) {
-      this.player.body.setVelocityX(160);
+    // Управління тільки кнопками
+    if (this.leftPressed) {
+      this.player.body.setVelocityX(-200);
+    } else if (this.rightPressed) {
+      this.player.body.setVelocityX(200);
     } else {
       this.player.body.setVelocityX(0);
     }
 
     // Стрибок
-    if ((this.cursors.up.isDown || this.jumpPressed) && this.player.body.touching.down) {
-      this.player.body.setVelocityY(-330);
+    if (this.jumpPressed && this.player.body.touching.down) {
+      this.player.body.setVelocityY(-450);
     }
   }
 
@@ -124,12 +128,15 @@ const config = {
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundColor: '#111',
-  physics: { default: 'arcade', arcade: { gravity: { y: 300 }, debug: false } },
-  scene: ALTSTGame
+  physics: { default: 'arcade', arcade: { gravity: { y: 600 }, debug: false } },
+  scene: ALTSTGame,
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  }
 };
 
 new Phaser.Game(config);
 </script>
 </body>
 </html>
-

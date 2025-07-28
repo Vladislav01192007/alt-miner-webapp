@@ -5,7 +5,7 @@
   <title>ALTST Mario Demo</title>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
   <style>
-    body { margin: 0; padding: 0; background: #111; }
+    body { margin: 0; padding: 0; background: #000; }
     canvas { display: block; margin: auto; }
   </style>
 </head>
@@ -16,39 +16,32 @@ class ALTSTGame extends Phaser.Scene {
     super('game');
   }
 
-  preload() {
-    // Прості текстури
-    this.load.image('platform', 'https://i.imgur.com/3uFzXlT.png');
-    this.load.image('coin', 'https://i.imgur.com/6Xr9j1R.png'); // ALTST монета
-    this.load.image('player', 'https://i.imgur.com/W0KxO6N.png'); // Герой
-  }
-
   create() {
+    // Рахунок
     this.score = 0;
-    this.add.text(16, 16, 'ALT: 0', { fontSize: '20px', fill: '#fff' }).setScrollFactor(0).setDepth(1);
-    this.scoreText = this.children.getByName('score');
+    this.scoreText = this.add.text(16, 16, 'ALT: 0', { fontSize: '20px', fill: '#fff' });
 
-    // Платформи
+    // Платформи (сині прямокутники)
     this.platforms = this.physics.add.staticGroup();
-    this.platforms.create(400, 580, 'platform').setScale(2).refreshBody();
-    this.platforms.create(600, 400, 'platform');
-    this.platforms.create(50, 250, 'platform');
-    this.platforms.create(750, 220, 'platform');
+    this.addPlatform(400, 580, 800, 40);
+    this.addPlatform(600, 400, 200, 20);
+    this.addPlatform(50, 250, 200, 20);
+    this.addPlatform(750, 220, 200, 20);
 
-    // Гравець
-    this.player = this.physics.add.sprite(100, 450, 'player').setScale(0.7);
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
+    // Гравець (зелений квадрат)
+    this.player = this.add.rectangle(100, 450, 40, 40, 0x00ff00);
+    this.physics.add.existing(this.player);
+    this.player.body.setBounce(0.2);
+    this.player.body.setCollideWorldBounds(true);
 
-    // Монетки
-    this.coins = this.physics.add.group({
-      key: 'coin',
-      repeat: 8,
-      setXY: { x: 50, y: 0, stepX: 90 }
-    });
-    this.coins.children.iterate(coin => {
-      coin.setBounceY(Phaser.Math.FloatBetween(0.2, 0.5));
-    });
+    // Монетки (жовті кружечки)
+    this.coins = this.physics.add.group();
+    for (let i = 0; i < 8; i++) {
+      let coin = this.add.circle(100 + i * 80, 100, 15, 0xffd700);
+      this.physics.add.existing(coin);
+      coin.body.setBounceY(Phaser.Math.FloatBetween(0.2, 0.5));
+      this.coins.add(coin);
+    }
 
     // Колізії
     this.physics.add.collider(this.player, this.platforms);
@@ -57,29 +50,36 @@ class ALTSTGame extends Phaser.Scene {
     // Збір монет
     this.physics.add.overlap(this.player, this.coins, this.collectCoin, null, this);
 
-    // Управління
+    // Керування
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
+  addPlatform(x, y, width, height) {
+    let platform = this.add.rectangle(x, y, width, height, 0x3366ff);
+    this.physics.add.existing(platform, true);
+    this.platforms.add(platform);
+  }
+
   update() {
+    // Ліво-право
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
+      this.player.body.setVelocityX(-160);
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
+      this.player.body.setVelocityX(160);
     } else {
-      this.player.setVelocityX(0);
+      this.player.body.setVelocityX(0);
     }
 
+    // Стрибок
     if (this.cursors.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
+      this.player.body.setVelocityY(-330);
     }
   }
 
   collectCoin(player, coin) {
-    coin.disableBody(true, true);
+    coin.destroy();
     this.score++;
-    document.querySelector('text')?.remove();
-    this.add.text(16, 16, 'ALT: ' + this.score, { fontSize: '20px', fill: '#fff' }).setScrollFactor(0).setDepth(1);
+    this.scoreText.setText('ALT: ' + this.score);
   }
 }
 
@@ -87,17 +87,12 @@ const config = {
   type: Phaser.AUTO,
   width: 800,
   height: 600,
+  backgroundColor: '#111',
   physics: { default: 'arcade', arcade: { gravity: { y: 300 }, debug: false } },
   scene: ALTSTGame
 };
 
 new Phaser.Game(config);
 </script>
-</body>
-</html>
-
-
-  <script src="main.js"></script>
- 
 </body>
 </html>

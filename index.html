@@ -1,94 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ALTSETING Miner</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>ALTST Mario Demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
+  <style>
+    body { margin: 0; padding: 0; background: #111; }
+    canvas { display: block; margin: auto; }
+  </style>
 </head>
 <body>
-  <div id="loader-screen">
-    <img id="loader-logo" src="logo-transparent-circle.png" alt="ALTSETING Logo">
-    <div class="loading-text">Loading...</div>
-    <div class="progress-container">
-      <div class="progress-bar"></div>
-    </div>
-  </div>
+<script>
+class ALTSTGame extends Phaser.Scene {
+  constructor() {
+    super('game');
+  }
 
-  <div id="game-screen" class="screen active" style="display: none;">
-    <!-- TAB: Miner -->
-    <div id="miner-tab" class="tab">
-      <div class="miner-box" style="display: flex; justify-content: center; margin-top: 20px;">
-        <button id="startMinerButton" class="logo-button">
-          <img src="logo-transparent-circle.png" alt="Mine" class="logo-img">
-        </button>
-      </div>
-      <div id="altCount">ALT: 0</div>
-    </div>
+  preload() {
+    // Прості текстури
+    this.load.image('platform', 'https://i.imgur.com/3uFzXlT.png');
+    this.load.image('coin', 'https://i.imgur.com/6Xr9j1R.png'); // ALTST монета
+    this.load.image('player', 'https://i.imgur.com/W0KxO6N.png'); // Герой
+  }
 
-    <!-- TAB: Upgrades -->
-    <div id="upgrades-tab" class="tab" style="display: none;">
-      <h2>Upgrades</h2>
-      <div class="upgrade" id="upgrade1">
-        <span>+1 ALT/sec — <strong>Cost: <span id="upgrade1Cost">10</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-      <div class="upgrade" id="upgrade2">
-        <span>+3 ALT/sec — <strong>Cost: <span id="upgrade2Cost">50</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-      <div class="upgrade" id="upgrade3">
-        <span>+10 ALT/sec — <strong>Cost: <span id="upgrade3Cost">200</span> ALT</strong></span>
-        <button>Buy</button>
-      </div>
-    </div>
+  create() {
+    this.score = 0;
+    this.add.text(16, 16, 'ALT: 0', { fontSize: '20px', fill: '#fff' }).setScrollFactor(0).setDepth(1);
+    this.scoreText = this.children.getByName('score');
 
-    <!-- TAB: Socials -->
-    <div id="socials-tab" class="tab" style="display: none;">
-      <h2>🌐 Follow Us</h2>
-      <div class="socials-list">
-        <div class="social-link"><a href="#">▶️ YouTube</a></div>
-        <div class="social-link"><a href="#">📸 Instagram</a></div>
-        <div class="social-link"><a href="#">✈️ Telegram</a></div>
-        <div class="social-link"><a href="#">🐦 Twitter</a></div>
-        <div class="social-link"><a href="#">🎵 TikTok</a></div>
-      </div>
-    </div>
+    // Платформи
+    this.platforms = this.physics.add.staticGroup();
+    this.platforms.create(400, 580, 'platform').setScale(2).refreshBody();
+    this.platforms.create(600, 400, 'platform');
+    this.platforms.create(50, 250, 'platform');
+    this.platforms.create(750, 220, 'platform');
 
-  <!-- TAB: Wallet -->
-<div id="wallet-tab" class="tab" style="display: none;">
-  <h2>👛 ALTSETING Wallet</h2>
-  <div class="wallet-container">
-    <div class="wallet-balance glass">
-      <div><strong>ALT:</strong> <span id="walletAlt">0</span></div>
-      <div><strong>ALTST:</strong> <span id="walletAltst">0</span></div>
-    </div>
+    // Гравець
+    this.player = this.physics.add.sprite(100, 450, 'player').setScale(0.7);
+    this.player.setBounce(0.2);
+    this.player.setCollideWorldBounds(true);
 
-    <div class="wallet-actions">
-      <button class="neon-button" onclick="convertAlt()">💱 10 ALT → 1 ALTST</button>
-    </div>
+    // Монетки
+    this.coins = this.physics.add.group({
+      key: 'coin',
+      repeat: 8,
+      setXY: { x: 50, y: 0, stepX: 90 }
+    });
+    this.coins.children.iterate(coin => {
+      coin.setBounceY(Phaser.Math.FloatBetween(0.2, 0.5));
+    });
 
-    <div id="wallet-message" class="wallet-message"></div>
+    // Колізії
+    this.physics.add.collider(this.player, this.platforms);
+    this.physics.add.collider(this.coins, this.platforms);
 
-    <!-- Реферальне посилання -->
-    <div id="referral-container" style="margin-top: 15px; word-break: break-all; color: #0ff; text-align: center;"></div>
+    // Збір монет
+    this.physics.add.overlap(this.player, this.coins, this.collectCoin, null, this);
 
-    <!-- Реферальна статистика -->
-    <div id="referral-stats" style="margin-top: 20px; text-align: center; font-size: 14px; color: #ccc;"></div>
-  </div>
-</div>
+    // Управління
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
 
+  update() {
+    if (this.cursors.left.isDown) {
+      this.player.setVelocityX(-160);
+    } else if (this.cursors.right.isDown) {
+      this.player.setVelocityX(160);
+    } else {
+      this.player.setVelocityX(0);
+    }
 
-    <!-- Footer Navigation -->
-    <footer>
-      <div class="nav-button-container">
-        <div class="nav-btn" onclick="showTab('miner-tab')">⛏️<br>Miner</div>
-        <div class="nav-btn" onclick="showTab('upgrades-tab')">⚙️<br>Upgrades</div>
-        <div class="nav-btn" onclick="showTab('socials-tab')">🌐<br>Socials</div>
-        <div class="nav-btn" onclick="showTab('wallet-tab')">👛<br>Wallet</div>
-      </div>
-    </footer>
-  </div>
+    if (this.cursors.up.isDown && this.player.body.touching.down) {
+      this.player.setVelocityY(-330);
+    }
+  }
+
+  collectCoin(player, coin) {
+    coin.disableBody(true, true);
+    this.score++;
+    document.querySelector('text')?.remove();
+    this.add.text(16, 16, 'ALT: ' + this.score, { fontSize: '20px', fill: '#fff' }).setScrollFactor(0).setDepth(1);
+  }
+}
+
+const config = {
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  physics: { default: 'arcade', arcade: { gravity: { y: 300 }, debug: false } },
+  scene: ALTSTGame
+};
+
+new Phaser.Game(config);
+</script>
+</body>
+</html>
+
 
   <script src="main.js"></script>
  
